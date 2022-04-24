@@ -15,6 +15,7 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
     @IBOutlet weak var playButton: UIButton!
     
     @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var clientList: UILabel!
     
     var gameMode: Int = 0
     var isHost: Bool = false
@@ -41,6 +42,8 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
     @IBAction func buttonPressed(_ sender: UIButton) {
         switch sender.tag {
         case 1:
+            visibilityButton.isEnabled = true
+            
             statusLabel.text = "Single player selected."
             
             singleButton.isSelected = true
@@ -54,6 +57,7 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
             
         case 2:
             singleButton.isSelected = false
+            playButton.isEnabled = false
             
             if visibilityButton.isSelected {
                 statusLabel.text = "Device invisible to nearby."
@@ -125,6 +129,15 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
             default:
                 print("Error")
             }
+            
+            if isHost {
+                clientList.text = "Client List:"
+                
+                for peer in session.connectedPeers {
+                    print(peer.displayName)
+                    clientList.text?.append("\n\(peer.displayName)")
+                }
+            }
         })
     }
     
@@ -148,6 +161,7 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
         // Called when the browser view controller is dismissed
         isHost = true
         statusLabel.text = "You are the host."
+        visibilityButton.isEnabled = false
         playButton.isEnabled = true
         
         dismiss(animated: true, completion: nil)
@@ -157,6 +171,7 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
         // Called when the browser view controller is cancelled
         isHost = false
         statusLabel.text = "You are no longer the host."
+        visibilityButton.isEnabled = true
         playButton.isEnabled = false
         
         session.disconnect()
@@ -187,6 +202,17 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
     override func viewWillAppear(_ animated: Bool) {
         singleButton.isSelected = false
         visibilityButton.isSelected = false
+        
+        if isHost {
+            clientList.text = "Client List:"
+            
+            for peer in session.connectedPeers {
+                print(peer.displayName)
+                clientList.text?.append("\n\(peer.displayName)")
+            }
+        } else {
+            clientList.text = ""
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
