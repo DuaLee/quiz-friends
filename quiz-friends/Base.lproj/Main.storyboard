@@ -78,7 +78,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Quiz Friends" largeTitleDisplayMode="always" id="TpE-Y2-oYr">
-                        <barButtonItem key="rightBarButtonItem" title="Connect" image="point.3.connected.trianglepath.dotted" catalog="system" id="yNm-Tl-RXe">
+                        <barButtonItem key="rightBarButtonItem" title="Host" id="yNm-Tl-RXe">
                             <connections>
                                 <action selector="connectButtonPressed:" destination="Nfa-8a-wxI" id="Css-Ua-wh3"/>
                             </connections>
@@ -131,7 +131,6 @@
         <image name="person.3.fill" catalog="system" width="128" height="61"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
-        <image name="point.3.connected.trianglepath.dotted" catalog="system" width="128" height="96"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

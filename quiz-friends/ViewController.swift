@@ -17,15 +17,15 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
     
     var gameMode: Int = 0
     
-    var peerID: MCPeerID!
+    var myPeerID: MCPeerID!
     var session: MCSession!
     var assistant: MCNearbyServiceAdvertiser!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.peerID = MCPeerID(displayName: UIDevice.current.name)
-        self.session = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
+        self.myPeerID = MCPeerID(displayName: UIDevice.current.name)
+        self.session = MCSession(peer: myPeerID, securityIdentity: nil, encryptionPreference: .required)
         
         session.delegate = self
     }
@@ -59,7 +59,7 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
     }
     
     func startHosting() {
-        assistant = MCNearbyServiceAdvertiser(peer: peerID, discoveryInfo: nil, serviceType: "game")
+        assistant = MCNearbyServiceAdvertiser(peer: myPeerID, discoveryInfo: nil, serviceType: "game")
         assistant.delegate = self
         assistant.startAdvertisingPeer()
     }
@@ -115,13 +115,30 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
     }
     
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
-        invitationHandler(true, session)
+        let acceptAction = UIAlertAction(title: "Accept",
+                                        style: .default) { action in
+            invitationHandler(true, self.session)
+        }
+        let declineAction = UIAlertAction(title: "Decline",
+                                         style: .cancel) { action in
+            invitationHandler(false, self.session)
+        }
+             
+        let alertController = UIAlertController(title: "🎮 Game Invite", message: "\(peerID.displayName) wants to play!", preferredStyle: .alert)
+        alertController.addAction(acceptAction)
+        alertController.addAction(declineAction)
+             
+        self.present(alertController, animated: true, completion: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         singleButton.isSelected = false
         multiButton.isSelected = false
         playButton.isEnabled = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
