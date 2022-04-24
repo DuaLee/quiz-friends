@@ -16,6 +16,7 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
     @IBOutlet weak var playButton: UIButton!
     
     var gameMode: Int = 0
+    var isHost: Bool = false
     
     var myPeerID: MCPeerID!
     var session: MCSession!
@@ -27,6 +28,9 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
         self.myPeerID = MCPeerID(displayName: UIDevice.current.name)
         self.session = MCSession(peer: myPeerID, securityIdentity: nil, encryptionPreference: .required)
         
+        assistant = MCNearbyServiceAdvertiser(peer: myPeerID, discoveryInfo: nil, serviceType: "game")
+        assistant.delegate = self
+        
         session.delegate = self
     }
 
@@ -35,6 +39,10 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
         case 1:
             singleButton.isSelected = true
             multiButton.isSelected = false
+            playButton.isEnabled = true
+            
+            stopClient()
+            session.disconnect()
             
             gameMode = 1
             
@@ -42,29 +50,33 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
             singleButton.isSelected = false
             multiButton.isSelected = true
             
+            if isHost {
+                playButton.isEnabled = true
+            } else {
+                startClient()
+            }
+            
             gameMode = 2
             
         default:
             gameMode = 0
         }
-        
-        if gameMode > 0 {
-            playButton.isEnabled = true
-        }
     }
     
     @IBAction func connectButtonPressed(_ sender: UIButton) {
-        startHosting()
-        joinSession()
+        stopClient()
+        startServer()
     }
     
-    func startHosting() {
-        assistant = MCNearbyServiceAdvertiser(peer: myPeerID, discoveryInfo: nil, serviceType: "game")
-        assistant.delegate = self
+    func startClient() {
         assistant.startAdvertisingPeer()
     }
     
-    func joinSession() {
+    func stopClient() {
+        assistant.stopAdvertisingPeer()
+    }
+    
+    func startServer() {
         let browser = MCBrowserViewController(serviceType: "game", session: session)
         browser.delegate = self
         present(browser, animated: true)
@@ -106,11 +118,17 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
     
     func browserViewControllerDidFinish(_ browserViewController: MCBrowserViewController) {
         // Called when the browser view controller is dismissed
+        isHost = true
+        
         dismiss(animated: true, completion: nil)
     }
     
     func browserViewControllerWasCancelled(_ browserViewController: MCBrowserViewController) {
         // Called when the browser view controller is cancelled
+        isHost = false
+        
+        session.disconnect()
+        
         dismiss(animated: true, completion: nil)
     }
     
@@ -133,12 +151,14 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
     
     override func viewWillAppear(_ animated: Bool) {
         singleButton.isSelected = false
-        multiButton.isSelected = false
-        playButton.isEnabled = false
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
         
+        if isHost {
+            multiButton.isSelected = true
+            playButton.isEnabled = true
+        } else {
+            multiButton.isSelected = false
+            playButton.isEnabled = false
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
