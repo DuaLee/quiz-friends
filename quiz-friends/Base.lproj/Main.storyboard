@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uhi-eL-eUn">
-                                <rect key="frame" x="150" y="154" width="244" height="244"/>
+                                <rect key="frame" x="150" y="134" width="244" height="244"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="uhi-eL-eUn" secondAttribute="height" multiplier="1:1" id="3fw-j1-Sds"/>
                                 </constraints>
@@ -32,7 +32,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mf9-ju-Wzp" userLabel="Multi Player">
-                                <rect key="frame" x="20" y="418" width="294" height="294"/>
+                                <rect key="frame" x="20" y="398" width="294" height="294"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="mf9-ju-Wzp" secondAttribute="height" multiplier="1:1" id="1gU-g8-gAx"/>
                                 </constraints>
@@ -47,7 +47,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y5q-7C-nvG" userLabel="Start">
-                                <rect key="frame" x="20" y="762" width="374" height="100"/>
+                                <rect key="frame" x="20" y="742" width="374" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="9Fi-it-Dlm"/>
                                 </constraints>
@@ -67,20 +67,20 @@
                         <constraints>
                             <constraint firstItem="xCC-RM-kwj" firstAttribute="trailing" secondItem="uhi-eL-eUn" secondAttribute="trailing" constant="20" id="6OY-bq-u52"/>
                             <constraint firstItem="xCC-RM-kwj" firstAttribute="trailing" secondItem="mf9-ju-Wzp" secondAttribute="trailing" constant="100" id="9KL-U8-Pxw"/>
-                            <constraint firstItem="y5q-7C-nvG" firstAttribute="bottom" secondItem="xCC-RM-kwj" secondAttribute="bottom" id="L8g-VJ-hPe"/>
+                            <constraint firstItem="y5q-7C-nvG" firstAttribute="bottom" secondItem="xCC-RM-kwj" secondAttribute="bottom" constant="-20" id="L8g-VJ-hPe"/>
                             <constraint firstItem="uhi-eL-eUn" firstAttribute="leading" secondItem="xCC-RM-kwj" secondAttribute="leading" constant="150" id="MHo-sp-UsB"/>
                             <constraint firstItem="xCC-RM-kwj" firstAttribute="trailing" secondItem="y5q-7C-nvG" secondAttribute="trailing" constant="20" id="Ojd-27-Dhl"/>
                             <constraint firstItem="mf9-ju-Wzp" firstAttribute="top" secondItem="uhi-eL-eUn" secondAttribute="bottom" constant="20" id="Pxc-TI-sRz"/>
-                            <constraint firstItem="uhi-eL-eUn" firstAttribute="top" secondItem="xCC-RM-kwj" secondAttribute="top" priority="750" constant="20" id="RCV-5f-Tln"/>
+                            <constraint firstItem="uhi-eL-eUn" firstAttribute="top" relation="greaterThanOrEqual" secondItem="xCC-RM-kwj" secondAttribute="top" constant="20" id="RCV-5f-Tln"/>
                             <constraint firstItem="mf9-ju-Wzp" firstAttribute="leading" secondItem="xCC-RM-kwj" secondAttribute="leading" constant="20" id="XgS-r4-i2B"/>
                             <constraint firstItem="y5q-7C-nvG" firstAttribute="leading" secondItem="xCC-RM-kwj" secondAttribute="leading" constant="20" id="bkj-JM-d3v"/>
                             <constraint firstItem="y5q-7C-nvG" firstAttribute="top" secondItem="mf9-ju-Wzp" secondAttribute="bottom" constant="50" id="pNV-Id-SPD"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Quiz Friends" largeTitleDisplayMode="always" id="TpE-Y2-oYr">
-                        <barButtonItem key="rightBarButtonItem" title="Connect" id="yNm-Tl-RXe">
+                        <barButtonItem key="rightBarButtonItem" title="Connect" image="point.3.connected.trianglepath.dotted" catalog="system" id="yNm-Tl-RXe">
                             <connections>
-                                <segue destination="pSj-tI-wKM" kind="presentation" id="zu6-E8-mRw"/>
+                                <action selector="connectButtonPressed:" destination="Nfa-8a-wxI" id="Css-Ua-wh3"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -108,36 +108,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p3V-LW-Ewc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1629" y="740"/>
-        </scene>
-        <!--Connect-->
-        <scene sceneID="Pjb-dd-VFK">
-            <objects>
-                <tableViewController id="pSj-tI-wKM" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="QbB-Yi-U2t">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Qz5-oH-409">
-                                <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Qz5-oH-409" id="VOC-2Z-ZsR">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="pSj-tI-wKM" id="gGL-5n-NaJ"/>
-                            <outlet property="delegate" destination="pSj-tI-wKM" id="DdZ-2q-7ux"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Connect" id="Vhb-Bt-eJJ"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zFy-R0-NAd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1630" y="29"/>
+            <point key="canvasLocation" x="1632" y="29"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gYb-jR-VKq">
@@ -160,6 +131,7 @@
         <image name="person.3.fill" catalog="system" width="128" height="61"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
+        <image name="point.3.connected.trianglepath.dotted" catalog="system" width="128" height="96"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
