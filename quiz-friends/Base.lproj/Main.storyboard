@@ -16,80 +16,96 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uhi-eL-eUn">
-                                <rect key="frame" x="198" y="108" width="196" height="196"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sbf-3G-UWo">
+                                <rect key="frame" x="20" y="108" width="374" height="734"/>
+                                <subviews>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ty6-fp-MdR">
+                                        <rect key="frame" x="0.0" y="20" width="374" height="150"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="150" id="GnW-3G-q5i"/>
+                                        </constraints>
+                                        <color key="tintColor" systemColor="systemYellowColor"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="tinted" image="person.fill" catalog="system" title=" Single Player" cornerStyle="small">
+                                            <fontDescription key="titleFontDescription" type="system" weight="light" pointSize="24"/>
+                                            <color key="baseBackgroundColor" systemColor="systemYellowColor"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="buttonPressed:" destination="Nfa-8a-wxI" eventType="touchUpInside" id="xU8-yE-09W"/>
+                                        </connections>
+                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="gQ0-tK-L0z">
+                                        <rect key="frame" x="0.0" y="220" width="374" height="150"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iyt-5C-gUB">
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="65"/>
+                                                <color key="tintColor" systemColor="systemOrangeColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="tinted" image="server.rack" catalog="system" title=" Host Multiplayer Game" cornerStyle="small">
+                                                    <fontDescription key="titleFontDescription" type="system" pointSize="17"/>
+                                                    <color key="baseBackgroundColor" systemColor="systemOrangeColor"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="connectButtonPressed:" destination="Nfa-8a-wxI" eventType="touchUpInside" id="lB6-eo-dp2"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k9h-CP-OLK">
+                                                <rect key="frame" x="0.0" y="85" width="374" height="65"/>
+                                                <color key="tintColor" systemColor="systemOrangeColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="tinted" image="wifi" catalog="system" title=" Enable Device Visibility" cornerStyle="small">
+                                                    <fontDescription key="titleFontDescription" type="system" pointSize="17"/>
+                                                    <color key="baseBackgroundColor" systemColor="systemOrangeColor"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="buttonPressed:" destination="Nfa-8a-wxI" eventType="touchUpInside" id="M7W-54-WqS"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="k9h-CP-OLK" firstAttribute="height" secondItem="Iyt-5C-gUB" secondAttribute="height" id="SEP-fi-4V2"/>
+                                        </constraints>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yWN-5G-sFr">
+                                        <rect key="frame" x="0.0" y="639" width="374" height="75"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="75" id="AWV-fC-YzA"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" image="play.fill" catalog="system" cornerStyle="small"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="uhi-eL-eUn" secondAttribute="height" multiplier="1:1" id="3fw-j1-Sds"/>
-                                    <constraint firstAttribute="height" constant="250" id="dnH-Cg-kT0"/>
+                                    <constraint firstItem="ty6-fp-MdR" firstAttribute="leading" secondItem="Sbf-3G-UWo" secondAttribute="leading" id="49q-v6-8Ei"/>
+                                    <constraint firstItem="gQ0-tK-L0z" firstAttribute="height" secondItem="ty6-fp-MdR" secondAttribute="height" id="6vk-CL-ZWW"/>
+                                    <constraint firstAttribute="bottom" secondItem="yWN-5G-sFr" secondAttribute="bottom" constant="20" symbolic="YES" id="EDH-n3-H7N"/>
+                                    <constraint firstItem="ty6-fp-MdR" firstAttribute="top" secondItem="Sbf-3G-UWo" secondAttribute="top" constant="20" symbolic="YES" id="R7F-1v-rYe"/>
+                                    <constraint firstAttribute="trailing" secondItem="ty6-fp-MdR" secondAttribute="trailing" id="RsL-x0-tvJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="yWN-5G-sFr" secondAttribute="bottom" constant="20" id="SIu-bZ-OaU"/>
+                                    <constraint firstItem="gQ0-tK-L0z" firstAttribute="top" secondItem="ty6-fp-MdR" secondAttribute="bottom" constant="50" id="SUc-Fa-Lxs"/>
+                                    <constraint firstAttribute="trailing" secondItem="yWN-5G-sFr" secondAttribute="trailing" id="X1B-8f-Tqe"/>
+                                    <constraint firstAttribute="trailing" secondItem="gQ0-tK-L0z" secondAttribute="trailing" id="csF-Im-VlI"/>
+                                    <constraint firstItem="yWN-5G-sFr" firstAttribute="top" relation="greaterThanOrEqual" secondItem="gQ0-tK-L0z" secondAttribute="bottom" constant="50" id="dh6-Zp-EUQ"/>
+                                    <constraint firstItem="yWN-5G-sFr" firstAttribute="leading" secondItem="Sbf-3G-UWo" secondAttribute="leading" id="kg0-Co-8VS"/>
+                                    <constraint firstItem="gQ0-tK-L0z" firstAttribute="leading" secondItem="Sbf-3G-UWo" secondAttribute="leading" id="vQq-zp-DSB"/>
                                 </constraints>
-                                <color key="tintColor" systemColor="systemOrangeColor"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Single Player"/>
-                                <buttonConfiguration key="configuration" style="tinted" image="person.fill" catalog="system" title="" cornerStyle="capsule">
-                                    <color key="baseBackgroundColor" systemColor="systemOrangeColor"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="buttonPressed:" destination="Nfa-8a-wxI" eventType="touchUpInside" id="zEa-Ae-Z4Q"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mf9-ju-Wzp" userLabel="Multi Player">
-                                <rect key="frame" x="20" y="324" width="294" height="294"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="mf9-ju-Wzp" secondAttribute="height" multiplier="1:1" id="1gU-g8-gAx"/>
-                                </constraints>
-                                <color key="tintColor" systemColor="systemYellowColor"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Single Player"/>
-                                <buttonConfiguration key="configuration" style="tinted" image="person.3.fill" catalog="system" title="" cornerStyle="capsule">
-                                    <color key="baseBackgroundColor" systemColor="systemYellowColor"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="buttonPressed:" destination="Nfa-8a-wxI" eventType="touchUpInside" id="hR0-Mh-CuD"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y5q-7C-nvG" userLabel="Start">
-                                <rect key="frame" x="20" y="668" width="374" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="9Fi-it-Dlm"/>
-                                </constraints>
-                                <color key="tintColor" systemColor="systemIndigoColor"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Single Player"/>
-                                <buttonConfiguration key="configuration" style="filled" image="play.fill" catalog="system" cornerStyle="medium">
-                                    <color key="baseBackgroundColor" systemColor="systemIndigoColor"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <segue destination="Gba-el-IDC" kind="show" identifier="quizSegue" id="wTD-20-Qfl"/>
-                                </connections>
-                            </button>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xCC-RM-kwj"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="mf9-ju-Wzp" firstAttribute="height" secondItem="uhi-eL-eUn" secondAttribute="height" multiplier="1.5" id="3Yv-vf-jIG"/>
-                            <constraint firstItem="xCC-RM-kwj" firstAttribute="trailing" secondItem="uhi-eL-eUn" secondAttribute="trailing" constant="20" id="6OY-bq-u52"/>
-                            <constraint firstItem="xCC-RM-kwj" firstAttribute="trailing" secondItem="mf9-ju-Wzp" secondAttribute="trailing" priority="750" constant="100" id="9KL-U8-Pxw"/>
-                            <constraint firstItem="y5q-7C-nvG" firstAttribute="bottom" secondItem="xCC-RM-kwj" secondAttribute="bottom" constant="-20" id="L8g-VJ-hPe"/>
-                            <constraint firstItem="uhi-eL-eUn" firstAttribute="leading" secondItem="xCC-RM-kwj" secondAttribute="leading" priority="750" constant="150" id="MHo-sp-UsB"/>
-                            <constraint firstItem="xCC-RM-kwj" firstAttribute="trailing" secondItem="y5q-7C-nvG" secondAttribute="trailing" constant="20" id="Ojd-27-Dhl"/>
-                            <constraint firstItem="mf9-ju-Wzp" firstAttribute="top" secondItem="uhi-eL-eUn" secondAttribute="bottom" constant="20" id="Pxc-TI-sRz"/>
-                            <constraint firstItem="uhi-eL-eUn" firstAttribute="top" secondItem="xCC-RM-kwj" secondAttribute="top" constant="20" id="RCV-5f-Tln"/>
-                            <constraint firstItem="mf9-ju-Wzp" firstAttribute="leading" secondItem="xCC-RM-kwj" secondAttribute="leading" constant="20" id="XgS-r4-i2B"/>
-                            <constraint firstItem="y5q-7C-nvG" firstAttribute="leading" secondItem="xCC-RM-kwj" secondAttribute="leading" constant="20" id="bkj-JM-d3v"/>
-                            <constraint firstItem="y5q-7C-nvG" firstAttribute="top" secondItem="mf9-ju-Wzp" secondAttribute="bottom" constant="50" id="pNV-Id-SPD"/>
+                            <constraint firstItem="xCC-RM-kwj" firstAttribute="bottom" secondItem="Sbf-3G-UWo" secondAttribute="bottom" constant="20" id="57g-HA-R5g"/>
+                            <constraint firstItem="Sbf-3G-UWo" firstAttribute="leading" secondItem="xCC-RM-kwj" secondAttribute="leading" constant="20" id="FLx-VE-d89"/>
+                            <constraint firstItem="Sbf-3G-UWo" firstAttribute="top" secondItem="xCC-RM-kwj" secondAttribute="top" constant="20" id="K3r-ci-gf1"/>
+                            <constraint firstItem="xCC-RM-kwj" firstAttribute="trailing" secondItem="Sbf-3G-UWo" secondAttribute="trailing" constant="20" id="RUA-q5-mc3"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Quiz Friends" largeTitleDisplayMode="always" id="TpE-Y2-oYr">
-                        <barButtonItem key="rightBarButtonItem" title="Host" image="server.rack" catalog="system" id="yNm-Tl-RXe">
-                            <connections>
-                                <action selector="connectButtonPressed:" destination="Nfa-8a-wxI" id="Css-Ua-wh3"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Quiz Friends" largeTitleDisplayMode="always" id="TpE-Y2-oYr"/>
                     <connections>
-                        <outlet property="multiButton" destination="mf9-ju-Wzp" id="4Fb-B1-zME"/>
-                        <outlet property="playButton" destination="y5q-7C-nvG" id="3Lh-Jg-539"/>
-                        <outlet property="singleButton" destination="uhi-eL-eUn" id="zjn-T7-W0b"/>
+                        <outlet property="playButton" destination="yWN-5G-sFr" id="pL0-9i-mLP"/>
+                        <outlet property="singleButton" destination="ty6-fp-MdR" id="ODG-bF-WrX"/>
+                        <outlet property="visibilityButton" destination="k9h-CP-OLK" id="BLH-Cl-ylH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cip-25-1tb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -99,7 +115,7 @@
         <!--Quiz-->
         <scene sceneID="rAe-ll-ydx">
             <objects>
-                <viewController id="Gba-el-IDC" customClass="QuizViewController" customModule="quiz_friends" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Quiz" id="Gba-el-IDC" customClass="QuizViewController" customModule="quiz_friends" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CZ5-qz-VPc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -130,15 +146,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="person.3.fill" catalog="system" width="128" height="61"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
         <image name="server.rack" catalog="system" width="128" height="93"/>
+        <image name="wifi" catalog="system" width="128" height="91"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemIndigoColor">
-            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

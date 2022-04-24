@@ -11,7 +11,7 @@ import MultipeerConnectivity
 class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate {
 
     @IBOutlet weak var singleButton: UIButton!
-    @IBOutlet weak var multiButton: UIButton!
+    @IBOutlet weak var visibilityButton: UIButton!
     
     @IBOutlet weak var playButton: UIButton!
     
@@ -32,13 +32,17 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
         assistant.delegate = self
         
         session.delegate = self
+        
+        visibilityButton.setTitle(" Disable Device Visibility", for: .selected)
+        visibilityButton.setTitle(" Enable Device Visibility", for: .normal)
+        visibilityButton.titleLabel?.font = .systemFont(ofSize: 24)
     }
 
     @IBAction func buttonPressed(_ sender: UIButton) {
         switch sender.tag {
         case 1:
             singleButton.isSelected = true
-            multiButton.isSelected = false
+            visibilityButton.isSelected = false
             playButton.isEnabled = true
             
             stopClient()
@@ -48,11 +52,14 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
             
         case 2:
             singleButton.isSelected = false
-            multiButton.isSelected = true
             
-            if isHost {
-                playButton.isEnabled = true
+            if visibilityButton.isSelected {
+                visibilityButton.isSelected = false
+                
+                stopClient()
             } else {
+                visibilityButton.isSelected = true
+                
                 startClient()
             }
             
@@ -64,6 +71,9 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
     }
     
     @IBAction func connectButtonPressed(_ sender: UIButton) {
+        singleButton.isSelected = false
+        visibilityButton.isSelected = false
+        
         stopClient()
         startServer()
     }
@@ -134,8 +144,9 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
     
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         let acceptAction = UIAlertAction(title: "Accept",
-                                        style: .default) { action in
-            invitationHandler(true, self.session)
+                                         style: .default) { [self] action in
+            invitationHandler(true, session)
+            stopClient()
         }
         let declineAction = UIAlertAction(title: "Decline",
                                          style: .cancel) { action in
@@ -151,12 +162,11 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
     
     override func viewWillAppear(_ animated: Bool) {
         singleButton.isSelected = false
+        visibilityButton.isSelected = false
         
         if isHost {
-            multiButton.isSelected = true
             playButton.isEnabled = true
         } else {
-            multiButton.isSelected = false
             playButton.isEnabled = false
         }
     }
