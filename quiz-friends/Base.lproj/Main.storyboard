@@ -46,7 +46,7 @@
                                                     <color key="baseBackgroundColor" systemColor="systemOrangeColor"/>
                                                 </buttonConfiguration>
                                                 <connections>
-                                                    <action selector="connectButtonPressed:" destination="Nfa-8a-wxI" eventType="touchUpInside" id="lB6-eo-dp2"/>
+                                                    <action selector="hostButtonPressed:" destination="Nfa-8a-wxI" eventType="touchUpInside" id="3vD-t8-EtR"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k9h-CP-OLK">
@@ -74,19 +74,28 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" image="play.fill" catalog="system" cornerStyle="small"/>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select a gamemode to start." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zlc-4k-gPd">
+                                        <rect key="frame" x="0.0" y="598.5" width="374" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="ty6-fp-MdR" firstAttribute="leading" secondItem="Sbf-3G-UWo" secondAttribute="leading" id="49q-v6-8Ei"/>
                                     <constraint firstItem="gQ0-tK-L0z" firstAttribute="height" secondItem="ty6-fp-MdR" secondAttribute="height" id="6vk-CL-ZWW"/>
+                                    <constraint firstItem="Zlc-4k-gPd" firstAttribute="leading" secondItem="Sbf-3G-UWo" secondAttribute="leading" id="DEn-BR-omS"/>
                                     <constraint firstAttribute="bottom" secondItem="yWN-5G-sFr" secondAttribute="bottom" constant="20" symbolic="YES" id="EDH-n3-H7N"/>
+                                    <constraint firstItem="yWN-5G-sFr" firstAttribute="top" secondItem="Zlc-4k-gPd" secondAttribute="bottom" constant="20" id="GFz-Np-B92"/>
+                                    <constraint firstAttribute="trailing" secondItem="Zlc-4k-gPd" secondAttribute="trailing" id="OVf-U1-oHn"/>
                                     <constraint firstItem="ty6-fp-MdR" firstAttribute="top" secondItem="Sbf-3G-UWo" secondAttribute="top" constant="20" symbolic="YES" id="R7F-1v-rYe"/>
                                     <constraint firstAttribute="trailing" secondItem="ty6-fp-MdR" secondAttribute="trailing" id="RsL-x0-tvJ"/>
                                     <constraint firstAttribute="bottom" secondItem="yWN-5G-sFr" secondAttribute="bottom" constant="20" id="SIu-bZ-OaU"/>
                                     <constraint firstItem="gQ0-tK-L0z" firstAttribute="top" secondItem="ty6-fp-MdR" secondAttribute="bottom" constant="50" id="SUc-Fa-Lxs"/>
                                     <constraint firstAttribute="trailing" secondItem="yWN-5G-sFr" secondAttribute="trailing" id="X1B-8f-Tqe"/>
                                     <constraint firstAttribute="trailing" secondItem="gQ0-tK-L0z" secondAttribute="trailing" id="csF-Im-VlI"/>
-                                    <constraint firstItem="yWN-5G-sFr" firstAttribute="top" relation="greaterThanOrEqual" secondItem="gQ0-tK-L0z" secondAttribute="bottom" constant="50" id="dh6-Zp-EUQ"/>
+                                    <constraint firstItem="Zlc-4k-gPd" firstAttribute="top" relation="greaterThanOrEqual" secondItem="gQ0-tK-L0z" secondAttribute="bottom" constant="50" id="dh6-Zp-EUQ"/>
                                     <constraint firstItem="yWN-5G-sFr" firstAttribute="leading" secondItem="Sbf-3G-UWo" secondAttribute="leading" id="kg0-Co-8VS"/>
                                     <constraint firstItem="gQ0-tK-L0z" firstAttribute="leading" secondItem="Sbf-3G-UWo" secondAttribute="leading" id="vQq-zp-DSB"/>
                                 </constraints>
@@ -105,6 +114,7 @@
                     <connections>
                         <outlet property="playButton" destination="yWN-5G-sFr" id="pL0-9i-mLP"/>
                         <outlet property="singleButton" destination="ty6-fp-MdR" id="ODG-bF-WrX"/>
+                        <outlet property="statusLabel" destination="Zlc-4k-gPd" id="PBU-Tg-vQ7"/>
                         <outlet property="visibilityButton" destination="k9h-CP-OLK" id="BLH-Cl-ylH"/>
                     </connections>
                 </viewController>
