@@ -1,24 +1,176 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VNq-nN-Vbx">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <!--Quiz Friends-->
+        <scene sceneID="9ue-ll-sns">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                <viewController id="Nfa-8a-wxI" customClass="ViewController" customModule="quiz_friends" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="iNa-ie-jeM">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <subviews>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uhi-eL-eUn">
+                                <rect key="frame" x="150" y="154" width="244" height="244"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="uhi-eL-eUn" secondAttribute="height" multiplier="1:1" id="3fw-j1-Sds"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="systemOrangeColor"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Single Player"/>
+                                <buttonConfiguration key="configuration" style="tinted" image="person.fill" catalog="system" title="" cornerStyle="capsule">
+                                    <color key="baseBackgroundColor" systemColor="systemOrangeColor"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="buttonPressed:" destination="Nfa-8a-wxI" eventType="touchUpInside" id="zEa-Ae-Z4Q"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mf9-ju-Wzp" userLabel="Multi Player">
+                                <rect key="frame" x="20" y="418" width="294" height="294"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="mf9-ju-Wzp" secondAttribute="height" multiplier="1:1" id="1gU-g8-gAx"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="systemYellowColor"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Single Player"/>
+                                <buttonConfiguration key="configuration" style="tinted" image="person.3.fill" catalog="system" title="" cornerStyle="capsule">
+                                    <color key="baseBackgroundColor" systemColor="systemYellowColor"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="buttonPressed:" destination="Nfa-8a-wxI" eventType="touchUpInside" id="hR0-Mh-CuD"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y5q-7C-nvG" userLabel="Start">
+                                <rect key="frame" x="20" y="762" width="374" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="9Fi-it-Dlm"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="systemIndigoColor"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Single Player"/>
+                                <buttonConfiguration key="configuration" style="filled" image="play.fill" catalog="system" cornerStyle="medium">
+                                    <color key="baseBackgroundColor" systemColor="systemIndigoColor"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <segue destination="Gba-el-IDC" kind="show" identifier="quizSegue" id="wTD-20-Qfl"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="xCC-RM-kwj"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="xCC-RM-kwj" firstAttribute="trailing" secondItem="uhi-eL-eUn" secondAttribute="trailing" constant="20" id="6OY-bq-u52"/>
+                            <constraint firstItem="xCC-RM-kwj" firstAttribute="trailing" secondItem="mf9-ju-Wzp" secondAttribute="trailing" constant="100" id="9KL-U8-Pxw"/>
+                            <constraint firstItem="y5q-7C-nvG" firstAttribute="bottom" secondItem="xCC-RM-kwj" secondAttribute="bottom" id="L8g-VJ-hPe"/>
+                            <constraint firstItem="uhi-eL-eUn" firstAttribute="leading" secondItem="xCC-RM-kwj" secondAttribute="leading" constant="150" id="MHo-sp-UsB"/>
+                            <constraint firstItem="xCC-RM-kwj" firstAttribute="trailing" secondItem="y5q-7C-nvG" secondAttribute="trailing" constant="20" id="Ojd-27-Dhl"/>
+                            <constraint firstItem="mf9-ju-Wzp" firstAttribute="top" secondItem="uhi-eL-eUn" secondAttribute="bottom" constant="20" id="Pxc-TI-sRz"/>
+                            <constraint firstItem="uhi-eL-eUn" firstAttribute="top" secondItem="xCC-RM-kwj" secondAttribute="top" priority="750" constant="20" id="RCV-5f-Tln"/>
+                            <constraint firstItem="mf9-ju-Wzp" firstAttribute="leading" secondItem="xCC-RM-kwj" secondAttribute="leading" constant="20" id="XgS-r4-i2B"/>
+                            <constraint firstItem="y5q-7C-nvG" firstAttribute="leading" secondItem="xCC-RM-kwj" secondAttribute="leading" constant="20" id="bkj-JM-d3v"/>
+                            <constraint firstItem="y5q-7C-nvG" firstAttribute="top" secondItem="mf9-ju-Wzp" secondAttribute="bottom" constant="50" id="pNV-Id-SPD"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Quiz Friends" largeTitleDisplayMode="always" id="TpE-Y2-oYr">
+                        <barButtonItem key="rightBarButtonItem" title="Connect" id="yNm-Tl-RXe">
+                            <connections>
+                                <segue destination="pSj-tI-wKM" kind="presentation" id="zu6-E8-mRw"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="multiButton" destination="mf9-ju-Wzp" id="4Fb-B1-zME"/>
+                        <outlet property="playButton" destination="y5q-7C-nvG" id="3Lh-Jg-539"/>
+                        <outlet property="singleButton" destination="uhi-eL-eUn" id="zjn-T7-W0b"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cip-25-1tb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="795.6521739130435" y="28.794642857142854"/>
+        </scene>
+        <!--Quiz-->
+        <scene sceneID="rAe-ll-ydx">
+            <objects>
+                <viewController id="Gba-el-IDC" customClass="QuizViewController" customModule="quiz_friends" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CZ5-qz-VPc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="AZ5-sJ-763"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Quiz" id="5kc-in-yE3"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p3V-LW-Ewc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1629" y="740"/>
+        </scene>
+        <!--Connect-->
+        <scene sceneID="Pjb-dd-VFK">
+            <objects>
+                <tableViewController id="pSj-tI-wKM" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="QbB-Yi-U2t">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Qz5-oH-409">
+                                <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Qz5-oH-409" id="VOC-2Z-ZsR">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="pSj-tI-wKM" id="gGL-5n-NaJ"/>
+                            <outlet property="delegate" destination="pSj-tI-wKM" id="DdZ-2q-7ux"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Connect" id="Vhb-Bt-eJJ"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zFy-R0-NAd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1630" y="29"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="gYb-jR-VKq">
+            <objects>
+                <navigationController id="VNq-nN-Vbx" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="z4z-Be-OM1">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Nfa-8a-wxI" kind="relationship" relationship="rootViewController" id="FJm-Gq-QtN"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="93m-gB-mQZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-59" y="29"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="person.3.fill" catalog="system" width="128" height="61"/>
+        <image name="person.fill" catalog="system" width="128" height="120"/>
+        <image name="play.fill" catalog="system" width="116" height="128"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemIndigoColor">
+            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>
