@@ -8,6 +8,75 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Settings-->
+        <scene sceneID="CSx-tL-6jQ">
+            <objects>
+                <viewController title="Settings" id="jw1-pX-oa5" customClass="SettingsViewController" customModule="quiz_friends" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="UAS-G9-r9I">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fmd-Ml-FjY">
+                                <rect key="frame" x="20" y="108" width="374" height="774"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="GCb-pY-9dV">
+                                        <rect key="frame" x="0.0" y="20" width="374" height="367"/>
+                                        <subviews>
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z9i-lU-UcG">
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="173.5"/>
+                                                <color key="tintColor" systemColor="systemOrangeColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="tinted" image="arrow.up.and.down.and.arrow.left.and.right" catalog="system" title=" Enable Tilt to Answer" cornerStyle="small">
+                                                    <fontDescription key="titleFontDescription" type="system" pointSize="17"/>
+                                                    <color key="baseBackgroundColor" systemColor="systemOrangeColor"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="buttonPressed:" destination="Nfa-8a-wxI" eventType="touchUpInside" id="HyG-6c-OzZ"/>
+                                                    <action selector="buttonPressed:" destination="jw1-pX-oa5" eventType="touchUpInside" id="xqn-4Z-l5x"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k6l-GA-hMx">
+                                                <rect key="frame" x="0.0" y="193.5" width="374" height="173.5"/>
+                                                <color key="tintColor" systemColor="systemOrangeColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="tinted" image="iphone.radiowaves.left.and.right" catalog="system" title=" Enable Haptic Feedback" cornerStyle="small">
+                                                    <fontDescription key="titleFontDescription" type="system" pointSize="17"/>
+                                                    <color key="baseBackgroundColor" systemColor="systemOrangeColor"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="buttonPressed:" destination="jw1-pX-oa5" eventType="touchUpInside" id="mgv-Vu-589"/>
+                                                    <action selector="hostButtonPressed:" destination="Nfa-8a-wxI" eventType="touchUpInside" id="Apr-MU-989"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="GCb-pY-9dV" firstAttribute="top" secondItem="Fmd-Ml-FjY" secondAttribute="top" constant="20" id="3OT-KU-z1N"/>
+                                    <constraint firstAttribute="trailing" secondItem="GCb-pY-9dV" secondAttribute="trailing" id="3sO-Rq-66X"/>
+                                    <constraint firstAttribute="trailing" secondItem="GCb-pY-9dV" secondAttribute="trailing" id="5BF-fr-epx"/>
+                                    <constraint firstAttribute="centerY" secondItem="GCb-pY-9dV" secondAttribute="bottom" id="75G-NJ-GfE"/>
+                                    <constraint firstItem="GCb-pY-9dV" firstAttribute="leading" secondItem="Fmd-Ml-FjY" secondAttribute="leading" id="8E8-DX-C4T"/>
+                                    <constraint firstItem="GCb-pY-9dV" firstAttribute="leading" secondItem="Fmd-Ml-FjY" secondAttribute="leading" id="gGl-cR-yW4"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="BcJ-nT-SlO"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Fmd-Ml-FjY" firstAttribute="bottom" secondItem="BcJ-nT-SlO" secondAttribute="bottom" constant="20" id="Iv5-80-kOc"/>
+                            <constraint firstItem="Fmd-Ml-FjY" firstAttribute="leading" secondItem="BcJ-nT-SlO" secondAttribute="leading" constant="20" id="PuL-Os-kD7"/>
+                            <constraint firstItem="BcJ-nT-SlO" firstAttribute="trailing" secondItem="Fmd-Ml-FjY" secondAttribute="trailing" constant="20" id="bBU-gi-zZL"/>
+                            <constraint firstItem="Fmd-Ml-FjY" firstAttribute="top" secondItem="BcJ-nT-SlO" secondAttribute="top" constant="20" id="gd6-9j-IKW"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Settings" id="s4E-0V-tyE"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aBf-J1-STM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="795.6521739130435" y="-691.07142857142856"/>
+        </scene>
         <!--Quiz Friends-->
         <scene sceneID="9ue-ll-sns">
             <objects>
@@ -123,7 +192,13 @@
                             <constraint firstItem="xCC-RM-kwj" firstAttribute="trailing" secondItem="Sbf-3G-UWo" secondAttribute="trailing" constant="20" id="RUA-q5-mc3"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Quiz Friends" largeTitleDisplayMode="always" id="TpE-Y2-oYr"/>
+                    <navigationItem key="navigationItem" title="Quiz Friends" largeTitleDisplayMode="always" id="TpE-Y2-oYr">
+                        <barButtonItem key="leftBarButtonItem" title="Settings" image="gearshape" catalog="system" id="Mj2-LU-9JM">
+                            <connections>
+                                <segue destination="jw1-pX-oa5" kind="show" id="bgz-hc-cm0"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="clientList" destination="4rc-tf-MUD" id="Tak-mX-pOG"/>
                         <outlet property="playButton" destination="yWN-5G-sFr" id="pL0-9i-mLP"/>
@@ -170,6 +245,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow.up.and.down.and.arrow.left.and.right" catalog="system" width="128" height="122"/>
+        <image name="gearshape" catalog="system" width="128" height="121"/>
+        <image name="iphone.radiowaves.left.and.right" catalog="system" width="128" height="85"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
         <image name="server.rack" catalog="system" width="128" height="93"/>

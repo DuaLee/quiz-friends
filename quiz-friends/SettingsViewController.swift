@@ -1,25 +1,21 @@
 //
-//  QuizViewController.swift
+//  SettingsViewController.swift
 //  quiz-friends
 //
-//  Created by Cony Lee on 4/24/22.
+//  Created by Cony Lee on 4/26/22.
 //
 
 import UIKit
 
-class QuizViewController: UIViewController {
-    
-    var gameMode: Int = 0
+class SettingsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        print(gameMode)
         // Do any additional setup after loading the view.
     }
     
-    
-    
+
     /*
     // MARK: - Navigation
 
@@ -30,4 +26,11 @@ class QuizViewController: UIViewController {
     }
     */
 
+    @IBAction func buttonPressed(_ sender: UIButton) {
+        if sender.isSelected {
+            sender.isSelected = false
+        } else {
+            sender.isSelected = true
+        }
+    }
 }
