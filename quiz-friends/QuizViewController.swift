@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import MultipeerConnectivity
 
-class QuizViewController: UIViewController {
+class QuizViewController: UIViewController, MCSessionDelegate {
     
     @IBOutlet weak var player1: UIButton!
     @IBOutlet weak var player2: UIButton!
@@ -19,26 +20,29 @@ class QuizViewController: UIViewController {
     @IBOutlet weak var buttonB: UIButton!
     @IBOutlet weak var buttonC: UIButton!
     @IBOutlet weak var buttonD: UIButton!
+    var answerButtons: [UIButton] = []
+    
+    var answerSelected = 0
     
     @IBOutlet weak var questionLabel: UILabel!
     
     var gameMode: Int = 0
+    
+    var myPeerID: MCPeerID!
+    var session: MCSession!
     
     var numQuestions = 0
     @Published var quizData = [QuizData]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      
-//        playerIcons = [player1, player2, player3, player4]
-//
-//        for playerIcon in playerIcons {
-//            playerIcon.isUserInteractionEnabled = false
-//            playerIcon.isSelected = false
-//            playerIcon.setTitle("", for: .normal)
-//        }
-      
-        // questionLabel.text = "Question 0/\(numQuestions[0])"
+        
+        session.delegate = self
+        
+        playerIcons = [player1, player2, player3, player4]
+        answerButtons = [buttonA, buttonB, buttonC, buttonD]
+        
+        setupUI(gameMode: gameMode)
         
         let urlString = "http://www.people.vcu.edu/~ebulut/jsonFiles/quiz1.json"
 
@@ -50,8 +54,52 @@ class QuizViewController: UIViewController {
                 print(error)
             }
         }
+    }
+    
+    func setupUI(gameMode: Int) {
+        for playerIcon in playerIcons {
+            playerIcon.isUserInteractionEnabled = false
+            playerIcon.isEnabled = false
+            playerIcon.isSelected = false
+            playerIcon.setTitle("", for: .normal)
+        }
         
-        print(gameMode)
+        if gameMode == 2 {
+            for index in 0..<session.connectedPeers.count {
+                playerIcons[index].isEnabled = true
+                playerIcons[index].setTitle("\(session.connectedPeers[index].displayName)", for: .normal)
+            }
+        }
+    }
+    
+    func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
+        
+    }
+    
+    func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL?, withError error: Error?) {
+        
+    }
+    
+    func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
+        
+    }
+    
+    func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
+        
+    }
+    
+    func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress) {
+        
+    }
+    
+    @IBAction func answerButtonPressed(_ sender: UIButton) {
+        for answerButton in answerButtons {
+            answerButton.isSelected = false
+        }
+        
+        sender.isSelected = true
+        answerSelected = sender.tag
+        print(answerSelected)
     }
     
     private func parse(jsonData: Data) {

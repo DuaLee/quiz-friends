@@ -8,9 +8,6 @@
 import UIKit
 import MultipeerConnectivity
 
-var myPeerID: MCPeerID!
-var session: MCSession!
-
 class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate {
 
     @IBOutlet weak var singleButton: UIButton!
@@ -88,6 +85,8 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
         session.disconnect()
         stopClient()
         startServer()
+        
+        gameMode = 2
     }
     
     func startClient() {
@@ -236,6 +235,7 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
                 let controller = segue.destination as! QuizViewController
                 
                 controller.gameMode = self.gameMode
+                controller.session = self.session
             default:
                 break
             }

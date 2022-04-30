@@ -143,7 +143,7 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" image="play.fill" catalog="system" cornerStyle="small"/>
                                         <connections>
-                                            <segue destination="Gba-el-IDC" kind="show" id="kTx-gu-7iR"/>
+                                            <segue destination="Gba-el-IDC" kind="show" identifier="quizSegue" id="kTx-gu-7iR"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select a gamemode to start." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zlc-4k-gPd">
@@ -222,7 +222,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="D1L-vV-WOv">
                                 <rect key="frame" x="20" y="108" width="374" height="86"/>
                                 <subviews>
-                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jpj-e6-87x">
+                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jpj-e6-87x">
                                         <rect key="frame" x="0.0" y="0.0" width="86" height="86"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="jpj-e6-87x" secondAttribute="height" multiplier="1:1" id="LyV-OH-mvr"/>
@@ -233,7 +233,7 @@
                                             <color key="baseBackgroundColor" systemColor="systemGreenColor"/>
                                         </buttonConfiguration>
                                     </button>
-                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vQw-QD-gua">
+                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vQw-QD-gua">
                                         <rect key="frame" x="96" y="0.0" width="86" height="86"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="vQw-QD-gua" secondAttribute="height" multiplier="1:1" id="YV7-Pf-hGE"/>
@@ -244,7 +244,7 @@
                                             <color key="baseBackgroundColor" systemColor="systemGreenColor"/>
                                         </buttonConfiguration>
                                     </button>
-                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uvb-8F-bCG">
+                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uvb-8F-bCG">
                                         <rect key="frame" x="192" y="0.0" width="86" height="86"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="uvb-8F-bCG" secondAttribute="height" multiplier="1:1" id="gHI-oG-MOB"/>
@@ -255,7 +255,7 @@
                                             <color key="baseBackgroundColor" systemColor="systemGreenColor"/>
                                         </buttonConfiguration>
                                     </button>
-                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Stv-zN-0XO">
+                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Stv-zN-0XO">
                                         <rect key="frame" x="288" y="0.0" width="86" height="86"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Stv-zN-0XO" secondAttribute="height" multiplier="1:1" id="SOu-SX-gqP"/>
@@ -271,28 +271,52 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="oPO-fd-MLg">
                                 <rect key="frame" x="20" y="612" width="374" height="230"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HKa-16-oc0">
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HKa-16-oc0">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
+                                        <color key="tintColor" systemColor="systemBrownColor"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="tinted" title="A" cornerStyle="large"/>
+                                        <buttonConfiguration key="configuration" style="tinted" title="A" cornerStyle="large">
+                                            <color key="baseBackgroundColor" systemColor="systemBrownColor"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="answerButtonPressed:" destination="Gba-el-IDC" eventType="touchUpInside" id="CK6-6h-S9M"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CHc-TZ-a7K">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CHc-TZ-a7K">
                                         <rect key="frame" x="0.0" y="60" width="374" height="50"/>
+                                        <color key="tintColor" systemColor="systemBrownColor"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="tinted" title="B" cornerStyle="large"/>
+                                        <buttonConfiguration key="configuration" style="tinted" title="B" cornerStyle="large">
+                                            <color key="baseBackgroundColor" systemColor="systemBrownColor"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="answerButtonPressed:" destination="Gba-el-IDC" eventType="touchUpInside" id="QDz-Dr-zno"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7I1-Uj-CED">
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7I1-Uj-CED">
                                         <rect key="frame" x="0.0" y="120" width="374" height="50"/>
+                                        <color key="tintColor" systemColor="systemBrownColor"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="tinted" title="C" cornerStyle="large"/>
+                                        <buttonConfiguration key="configuration" style="tinted" title="C" cornerStyle="large">
+                                            <color key="baseBackgroundColor" systemColor="systemBrownColor"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="answerButtonPressed:" destination="Gba-el-IDC" eventType="touchUpInside" id="43Y-bZ-qYO"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J0W-jx-IVc">
+                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J0W-jx-IVc">
                                         <rect key="frame" x="0.0" y="180" width="374" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="9HE-dp-5GZ"/>
                                         </constraints>
+                                        <color key="tintColor" systemColor="systemBrownColor"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="tinted" title="D" cornerStyle="large"/>
+                                        <buttonConfiguration key="configuration" style="tinted" title="D" cornerStyle="large">
+                                            <color key="baseBackgroundColor" systemColor="systemBrownColor"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="answerButtonPressed:" destination="Gba-el-IDC" eventType="touchUpInside" id="tjM-5v-QzC"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -367,6 +391,9 @@
         <image name="wifi" catalog="system" width="128" height="91"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBrownColor">
+            <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
