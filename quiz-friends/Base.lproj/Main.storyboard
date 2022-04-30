@@ -333,6 +333,7 @@
                         <outlet property="player2" destination="vQw-QD-gua" id="GaH-W0-ccF"/>
                         <outlet property="player3" destination="uvb-8F-bCG" id="OlT-PI-ht5"/>
                         <outlet property="player4" destination="Stv-zN-0XO" id="YdS-1q-qwJ"/>
+                        <outlet property="questionLabel" destination="AiS-27-ly5" id="dqk-vh-acq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p3V-LW-Ewc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

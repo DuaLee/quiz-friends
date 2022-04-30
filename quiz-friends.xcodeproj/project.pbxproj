@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		42429EC4281DD300006BA037 /* QuizData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42429EC3281DD300006BA037 /* QuizData.swift */; };
 		424A9A9A28159F210063EC2F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A9A9928159F210063EC2F /* AppDelegate.swift */; };
 		424A9A9E28159F210063EC2F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A9A9D28159F210063EC2F /* ViewController.swift */; };
 		424A9AA128159F210063EC2F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 424A9A9F28159F210063EC2F /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		42429EC3281DD300006BA037 /* QuizData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizData.swift; sourceTree = "<group>"; };
 		424A9A9628159F210063EC2F /* quiz-friends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "quiz-friends.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		424A9A9928159F210063EC2F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		424A9A9D28159F210063EC2F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 				424A9AA728159F220063EC2F /* Info.plist */,
 				424A9AAD2815ACD80063EC2F /* QuizViewController.swift */,
 				427EF8F2281861E0007E05A1 /* SettingsViewController.swift */,
+				42429EC3281DD300006BA037 /* QuizData.swift */,
 			);
 			path = "quiz-friends";
 			sourceTree = "<group>";
@@ -144,6 +147,7 @@
 				424A9A9E28159F210063EC2F /* ViewController.swift in Sources */,
 				424A9A9A28159F210063EC2F /* AppDelegate.swift in Sources */,
 				424A9AAE2815ACD80063EC2F /* QuizViewController.swift in Sources */,
+				42429EC4281DD300006BA037 /* QuizData.swift in Sources */,
 				427EF8F3281861E0007E05A1 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
