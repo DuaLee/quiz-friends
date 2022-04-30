@@ -4,6 +4,7 @@
 //
 //  Created by Lannah Bell on 4/26/22.
 //
+
 import Foundation
 
 struct QuizData: Decodable {

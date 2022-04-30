@@ -24,19 +24,19 @@ class QuizViewController: UIViewController {
     
     var gameMode: Int = 0
     
-    var numQuestions = [Int]()
+    var numQuestions = 0
     @Published var quizData = [QuizData]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
       
-        playerIcons = [player1, player2, player3, player4]
-        
-        for playerIcon in playerIcons {
-            playerIcon.isUserInteractionEnabled = false
-            playerIcon.isSelected = false
-            playerIcon.setTitle("", for: .normal)
-        }
+//        playerIcons = [player1, player2, player3, player4]
+//
+//        for playerIcon in playerIcons {
+//            playerIcon.isUserInteractionEnabled = false
+//            playerIcon.isSelected = false
+//            playerIcon.setTitle("", for: .normal)
+//        }
       
         // questionLabel.text = "Question 0/\(numQuestions[0])"
         
@@ -59,12 +59,12 @@ class QuizViewController: UIViewController {
             let decodedData = try JSONDecoder().decode(QuizData.self, from: jsonData)
             
             print("Number of questions: ", decodedData.numberOfQuestions)
-            numQuestions.append(decodedData.numberOfQuestions)
-           // print("Questions: ", decodedData.questions)
+            numQuestions = decodedData.numberOfQuestions
+            //print("Questions: ", decodedData.questions)
             //print("Question num: ", decodedData.questionNumber)
             print("Topic: ", decodedData.topic)
             print(numQuestions)
-           // numQuestions = decodedData.numberOfQuestions
+            //numQuestions = decodedData.numberOfQuestions
             
             //print("Description: ", decodedData.description)
             print("===================================")
@@ -72,7 +72,6 @@ class QuizViewController: UIViewController {
             print("decode error")
         }
     }
-    
     
     private func loadJson(fromURLString urlString: String,
                           completion: @escaping (Result<Data, Error>) -> Void) {
@@ -84,7 +83,7 @@ class QuizViewController: UIViewController {
                 
                 if let data = data {
                     DispatchQueue.main.async {
-                        self.questionLabel.text = "Question 0/\(self.numQuestions[0])"
+                        self.questionLabel.text = "Question 0/\(self.numQuestions)"
                     }
                     completion(.success(data))
                 }
