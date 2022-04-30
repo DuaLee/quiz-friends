@@ -274,17 +274,17 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HKa-16-oc0">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="tinted" title="Button" cornerStyle="large"/>
+                                        <buttonConfiguration key="configuration" style="tinted" title="A" cornerStyle="large"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CHc-TZ-a7K">
                                         <rect key="frame" x="0.0" y="60" width="374" height="50"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="tinted" title="Button" cornerStyle="large"/>
+                                        <buttonConfiguration key="configuration" style="tinted" title="B" cornerStyle="large"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7I1-Uj-CED">
                                         <rect key="frame" x="0.0" y="120" width="374" height="50"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="tinted" title="Button" cornerStyle="large"/>
+                                        <buttonConfiguration key="configuration" style="tinted" title="C" cornerStyle="large"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J0W-jx-IVc">
                                         <rect key="frame" x="0.0" y="180" width="374" height="50"/>
@@ -292,7 +292,7 @@
                                             <constraint firstAttribute="height" constant="50" id="9HE-dp-5GZ"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="tinted" title="Button" cornerStyle="large"/>
+                                        <buttonConfiguration key="configuration" style="tinted" title="D" cornerStyle="large"/>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -325,6 +325,10 @@
                     </view>
                     <navigationItem key="navigationItem" title="Quiz" id="5kc-in-yE3"/>
                     <connections>
+                        <outlet property="buttonA" destination="HKa-16-oc0" id="JLY-eq-mGx"/>
+                        <outlet property="buttonB" destination="CHc-TZ-a7K" id="5kN-Df-0yx"/>
+                        <outlet property="buttonC" destination="7I1-Uj-CED" id="5Qk-R4-RgK"/>
+                        <outlet property="buttonD" destination="J0W-jx-IVc" id="MED-GJ-LhO"/>
                         <outlet property="player1" destination="jpj-e6-87x" id="LeD-cn-0tu"/>
                         <outlet property="player2" destination="vQw-QD-gua" id="GaH-W0-ccF"/>
                         <outlet property="player3" destination="uvb-8F-bCG" id="OlT-PI-ht5"/>

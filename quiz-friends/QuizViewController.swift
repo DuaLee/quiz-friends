@@ -15,6 +15,13 @@ class QuizViewController: UIViewController {
     @IBOutlet weak var player4: UIButton!
     var playerIcons: [UIButton] = []
     
+    @IBOutlet weak var buttonA: UIButton!
+    @IBOutlet weak var buttonB: UIButton!
+    @IBOutlet weak var buttonC: UIButton!
+    @IBOutlet weak var buttonD: UIButton!
+    
+    
+    
     var gameMode: Int = 0
 
     override func viewDidLoad() {
@@ -23,7 +30,9 @@ class QuizViewController: UIViewController {
         playerIcons = [player1, player2, player3, player4]
         
         for playerIcon in playerIcons {
+            playerIcon.isUserInteractionEnabled = false
             playerIcon.isSelected = false
+            playerIcon.setTitle("", for: .normal)
         }
 
         print(gameMode)
