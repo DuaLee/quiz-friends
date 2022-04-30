@@ -202,6 +202,7 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
     override func viewWillAppear(_ animated: Bool) {
         singleButton.isSelected = false
         visibilityButton.isSelected = false
+        playButton.isEnabled = false
         
         if isHost {
             clientList.text = "Client List:"
