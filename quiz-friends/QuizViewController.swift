@@ -4,6 +4,7 @@
 //
 //  Created by Cony Lee on 4/24/22.
 //
+
 import UIKit
 
 class QuizViewController: UIViewController {
@@ -49,7 +50,7 @@ class QuizViewController: UIViewController {
                 print(error)
             }
         }
-       
+        
         print(gameMode)
     }
     

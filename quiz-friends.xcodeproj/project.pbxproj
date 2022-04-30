@@ -62,13 +62,13 @@
 			children = (
 				424A9A9928159F210063EC2F /* AppDelegate.swift */,
 				424A9A9D28159F210063EC2F /* ViewController.swift */,
+				424A9AAD2815ACD80063EC2F /* QuizViewController.swift */,
+				427EF8F2281861E0007E05A1 /* SettingsViewController.swift */,
+				42429EC3281DD300006BA037 /* QuizData.swift */,
 				424A9A9F28159F210063EC2F /* Main.storyboard */,
 				424A9AA228159F220063EC2F /* Assets.xcassets */,
 				424A9AA428159F220063EC2F /* LaunchScreen.storyboard */,
 				424A9AA728159F220063EC2F /* Info.plist */,
-				424A9AAD2815ACD80063EC2F /* QuizViewController.swift */,
-				427EF8F2281861E0007E05A1 /* SettingsViewController.swift */,
-				42429EC3281DD300006BA037 /* QuizData.swift */,
 			);
 			path = "quiz-friends";
 			sourceTree = "<group>";
