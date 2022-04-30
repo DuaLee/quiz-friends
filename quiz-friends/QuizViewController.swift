@@ -2,12 +2,25 @@
 //  QuizViewController.swift
 //  quiz-friends
 //
-//  Created by Lannah Bell on 4/25/22.
+//  Created by Cony Lee on 4/24/22.
 //
 
 import UIKit
 
 class QuizViewController: UIViewController {
+    
+    @IBOutlet weak var player1: UIButton!
+    @IBOutlet weak var player2: UIButton!
+    @IBOutlet weak var player3: UIButton!
+    @IBOutlet weak var player4: UIButton!
+    var playerIcons: [UIButton] = []
+    
+    @IBOutlet weak var buttonA: UIButton!
+    @IBOutlet weak var buttonB: UIButton!
+    @IBOutlet weak var buttonC: UIButton!
+    @IBOutlet weak var buttonD: UIButton!
+    
+    
     
     var gameMode: Int = 0
     var numQuestions = [Int]()
@@ -17,9 +30,16 @@ class QuizViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+      
+        playerIcons = [player1, player2, player3, player4]
         
-       
-       // questionLabel.text = "Question 0/\(numQuestions[0])"
+        for playerIcon in playerIcons {
+            playerIcon.isUserInteractionEnabled = false
+            playerIcon.isSelected = false
+            playerIcon.setTitle("", for: .normal)
+        }
+      
+        // questionLabel.text = "Question 0/\(numQuestions[0])"
         
         let urlString = "http://www.people.vcu.edu/~ebulut/jsonFiles/quiz1.json"
 

@@ -8,6 +8,9 @@
 import UIKit
 import MultipeerConnectivity
 
+var myPeerID: MCPeerID!
+var session: MCSession!
+
 class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate {
 
     @IBOutlet weak var singleButton: UIButton!
@@ -131,6 +134,12 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
             }
             
             if isHost {
+                if session.connectedPeers.count > 0 {
+                    playButton.isEnabled = true
+                } else {
+                    playButton.isEnabled = false
+                }
+                
                 clientList.text = "Client List:"
                 
                 for peer in session.connectedPeers {
@@ -202,8 +211,13 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
     override func viewWillAppear(_ animated: Bool) {
         singleButton.isSelected = false
         visibilityButton.isSelected = false
+        playButton.isEnabled = false
         
         if isHost {
+            if session.connectedPeers.count > 0 {
+                playButton.isEnabled = true
+            }
+            
             clientList.text = "Client List:"
             
             for peer in session.connectedPeers {
