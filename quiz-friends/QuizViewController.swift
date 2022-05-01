@@ -24,6 +24,7 @@ class QuizViewController: UIViewController, MCSessionDelegate {
     
     var answerSelected = 0
     
+    @IBOutlet weak var questionNumLabel: UILabel!
     @IBOutlet weak var questionLabel: UILabel!
     
     var gameMode: Int = 0
@@ -145,7 +146,8 @@ class QuizViewController: UIViewController, MCSessionDelegate {
                 
                 if let data = data {
                     DispatchQueue.main.async {
-                        self.questionLabel.text = "Question \(self.question[0].num)/\(self.numQuestions)"
+                        self.questionNumLabel.text = "Question \(self.question[0].num)/\(self.numQuestions)"
+                        self.questionLabel.text = "\(self.question[0].questionS)"
                     }
                     completion(.success(data))
                 }
