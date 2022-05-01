@@ -9,20 +9,21 @@ import Foundation
 
 struct QuizData: Decodable {
     let numberOfQuestions: Int
-    //let questions: String
+    let questions: [QuestionData]
     let topic: String
     //var questionNumber: Int
 }
 
 struct QuestionData: Codable {
     
-    //let question: String
-    //let options: OptionData
-    //let correctOption: String
+    let number: Int
+    let questionSentence: String
+   // let options: [OptionData]
+    
 }
 
 struct OptionData: Codable {
-    let optionLetter: String
-    let optionWord: String
-    let topic: String
+    //let optionLetter: String
+   // let optionWord: String
+   // let correctOption: String
 }

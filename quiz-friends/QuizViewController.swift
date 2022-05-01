@@ -32,7 +32,16 @@ class QuizViewController: UIViewController, MCSessionDelegate {
     var session: MCSession!
     
     var numQuestions = 0
+    var i = 0
     @Published var quizData = [QuizData]()
+    
+    struct questionStruct {
+        var num: Int
+        var questionS: String
+        
+    }
+    
+    var question = [questionStruct]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,7 +117,12 @@ class QuizViewController: UIViewController, MCSessionDelegate {
             
             print("Number of questions: ", decodedData.numberOfQuestions)
             numQuestions = decodedData.numberOfQuestions
-            //print("Questions: ", decodedData.questions)
+            for i in 0..<numQuestions {
+                question.append(questionStruct(num: decodedData.questions[i].number, questionS: decodedData.questions[i].questionSentence ))
+                print("Number: ", decodedData.questions[i].number)
+                print("Question: ", decodedData.questions[i].questionSentence)
+                //print("Op: ", decodedData.questions[i].options.count)
+            }
             //print("Question num: ", decodedData.questionNumber)
             print("Topic: ", decodedData.topic)
             print(numQuestions)
@@ -131,7 +145,7 @@ class QuizViewController: UIViewController, MCSessionDelegate {
                 
                 if let data = data {
                     DispatchQueue.main.async {
-                        self.questionLabel.text = "Question 0/\(self.numQuestions)"
+                        self.questionLabel.text = "Question \(self.question[0].num)/\(self.numQuestions)"
                     }
                     completion(.success(data))
                 }
