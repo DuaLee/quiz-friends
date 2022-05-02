@@ -14,7 +14,6 @@
 		424A9AA628159F220063EC2F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 424A9AA428159F220063EC2F /* LaunchScreen.storyboard */; };
 		424A9AAE2815ACD80063EC2F /* QuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A9AAD2815ACD80063EC2F /* QuizViewController.swift */; };
 		427EF8F3281861E0007E05A1 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427EF8F2281861E0007E05A1 /* SettingsViewController.swift */; };
-		BD2E265E28205D5D00FAA926 /* EndingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2E265D28205D5C00FAA926 /* EndingViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +26,6 @@
 		424A9AA728159F220063EC2F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		424A9AAD2815ACD80063EC2F /* QuizViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewController.swift; sourceTree = "<group>"; };
 		427EF8F2281861E0007E05A1 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		BD2E265D28205D5C00FAA926 /* EndingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,7 +63,6 @@
 				424A9AAD2815ACD80063EC2F /* QuizViewController.swift */,
 				427EF8F2281861E0007E05A1 /* SettingsViewController.swift */,
 				424A9A9F28159F210063EC2F /* Main.storyboard */,
-				BD2E265D28205D5C00FAA926 /* EndingViewController.swift */,
 				424A9AA228159F220063EC2F /* Assets.xcassets */,
 				424A9AA428159F220063EC2F /* LaunchScreen.storyboard */,
 				424A9AA728159F220063EC2F /* Info.plist */,
@@ -144,7 +141,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD2E265E28205D5D00FAA926 /* EndingViewController.swift in Sources */,
 				424A9A9E28159F210063EC2F /* ViewController.swift in Sources */,
 				424A9A9A28159F210063EC2F /* AppDelegate.swift in Sources */,
 				424A9AAE2815ACD80063EC2F /* QuizViewController.swift in Sources */,

@@ -12,6 +12,22 @@ import AudioToolbox
 
 class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelegate {
     
+    // MARK: Color Constants
+    let correctColor = UIColor.systemCyan
+    let incorrectColor = UIColor.systemPink
+    let noAnswerColor = UIColor.systemPink
+    let defaultColor = UIColor.systemGray
+    //
+    
+    // MARK: Timer Constants (seconds)
+    let questionTime: TimeInterval = 20
+    let reviewTime: TimeInterval = 3
+    //
+    
+    // MARK: JSON Source Constants
+    let endIndex = 3
+    //
+    
     @IBOutlet weak var quizTitle: UINavigationItem!
     weak var parentVC: ViewController?
     
@@ -20,6 +36,12 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
     @IBOutlet weak var player3: UIButton!
     @IBOutlet weak var player4: UIButton!
     var playerIcons: [UIButton] = []
+    
+    @IBOutlet weak var status1: UILabel!
+    @IBOutlet weak var status2: UILabel!
+    @IBOutlet weak var status3: UILabel!
+    @IBOutlet weak var status4: UILabel!
+    var statusLabels: [UILabel] = []
     
     @IBOutlet weak var buttonA: UIButton!
     @IBOutlet weak var buttonB: UIButton!
@@ -75,7 +97,17 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
         session.delegate = self
         
         playerIcons = [player1, player2, player3, player4]
+        statusLabels = [status1, status2, status3, status4]
         answerButtons = [buttonA, buttonB, buttonC, buttonD]
+        restartButton.isSelected = false
+        
+        for playerIcon in playerIcons {
+            playerIcon.isSelected = false
+        }
+        for statusLabel in statusLabels {
+            statusLabel.textColor = defaultColor
+            statusLabel.text = ""
+        }
         
         setupUI(gameMode: gameMode)
         
@@ -145,7 +177,7 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
         basicAnimation.delegate = self
         
         basicAnimation.toValue = 1
-        basicAnimation.duration = 20
+        basicAnimation.duration = questionTime
         basicAnimation.fillMode = .forwards
         basicAnimation.isRemovedOnCompletion = false
         
@@ -153,17 +185,26 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
     }
     
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        // MARK: Send answer choice to other clients (display red for incorrect, blue for correct), wait 3-5 seconds, move to next question
         for answerButton in answerButtons {
             answerButton.isEnabled = false
         }
         
         var trigger = Data()
         
+        print(answerSelected)
+        
         if answerSelected > 0 {
-            trigger = self.option[answerSelected - 1].letter!.data(using: .utf8, allowLossyConversion: false)!
+            trigger = option[answerSelected - 1].letter!.data(using: .utf8, allowLossyConversion: false)!
+            
+            if option[answerSelected - 1].letter! == question[0].correctAns! {
+                statusLabels[0].textColor = correctColor
+            } else {
+                statusLabels[0].textColor = incorrectColor
+            }
         } else {
             trigger = "0".data(using: .utf8, allowLossyConversion: false)!
+        
+            statusLabels[0].textColor = noAnswerColor
         }
         
         do {
@@ -172,28 +213,46 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
             //print(error)
         }
         
-        if self.option[answerSelected - 1].letter! == question[0].correctAns! {
-            playerIcons[0].backgroundColor = .blue
-        } else {
-            playerIcons[0].backgroundColor = .red
-        }
-        
-        Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { [self] _ in
-            shapeLayer.removeAnimation(forKey: "circle")
-            drawTimer()
-            
-            answerSelected = 0
-            for answerButton in answerButtons {
-                answerButton.isSelected = false
-                answerButton.isEnabled = true
-            }
-            
+        Timer.scheduledTimer(withTimeInterval: reviewTime, repeats: false) { [self] _ in
             question.remove(at: 0)
             option.removeSubrange(0...3)
             
-            if 0 < question.count {
+            if question.count > 0 {
+                shapeLayer.removeAnimation(forKey: "circle")
+                drawTimer()
+                
+                for answerButton in answerButtons {
+                    answerButton.isSelected = false
+                    answerButton.isEnabled = true
+                }
+                for playerIcon in playerIcons {
+                    playerIcon.isSelected = false
+                }
+                for statusLabel in statusLabels {
+                    statusLabel.textColor = defaultColor
+                }
+                
                 loadQuizData()
+            } else {
+                EndingView.isHidden = false
+                questionNumLabel.isHidden = true
+                
+                for answerButton in answerButtons {
+                    answerButton.isEnabled = false
+                    answerButton.setTitle("", for: .normal)
+                }
+                
+                option.removeAll()
+                question.removeAll()
+                
+                numQuestions = 0
+                
+                tiltTimer.invalidate()
+                
+                //print(option.count)
             }
+            
+            answerSelected = 0
         }
     }
     
@@ -207,7 +266,7 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
         do {
             try session.send(trigger!, toPeers: session.connectedPeers, with: .reliable)
         } catch {
-            print(error)
+            //print(error)
         }
     }
     
@@ -241,11 +300,13 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
         
         playerIcons[0].setTitle(myPeerID.displayName, for: .normal)
         playerIcons[0].isEnabled = true
+        statusLabels[0].text = "⬤"
         
         if gameMode == 2 {
             for index in 0..<session.connectedPeers.count {
                 playerIcons[index + 1].isEnabled = true
                 playerIcons[index + 1].setTitle("\(session.connectedPeers[index].displayName)", for: .normal)
+                statusLabels[index + 1].text = "⬤"
             }
         }
     }
@@ -276,9 +337,11 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
             } else {
                 DispatchQueue.main.async { [self] in
                     if dataString == question[0].correctAns! {
-                        playerIcons[playerIndex + 1].backgroundColor = .blue
+                        statusLabels[playerIndex + 1].textColor = correctColor
+                    } else if dataString == "0" {
+                        statusLabels[playerIndex + 1].textColor = noAnswerColor
                     } else {
-                        playerIcons[playerIndex + 1].backgroundColor = .red
+                        statusLabels[playerIndex + 1].textColor = incorrectColor
                     }
                 }
             }
@@ -319,7 +382,9 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
         answerButtons[answerChoice - 1].isSelected = true
         answerSelected = answerChoice
         
-        broadcastAnswer()
+        if question.count != 0 {
+            broadcastAnswer()
+        }
     }
     
     @IBAction func answerButtonPressed(_ sender: UIButton) {
@@ -334,7 +399,9 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
         sender.isSelected = true
         answerSelected = sender.tag
         
-        broadcastAnswer()
+        if question.count != 0 {
+            broadcastAnswer()
+        }
     }
     
     // MARK: Asynchronous Http call to api url, using URLSession:
@@ -356,7 +423,7 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
                         self.readJSONData(dictionary)
                     }
                 } catch {
-                    print("Error")
+                    //print("Error")
                 }
             }
         })
@@ -397,135 +464,20 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
         }
     }
     
-    func broadcastAnswer() {
-        if answerSelected != 0 {
-            playerIcons[0].isSelected = true
-            
-            let trigger = "\(answerSelected)".data(using: .utf8, allowLossyConversion: false)
-            
-            do {
-                try session.send(trigger!, toPeers: session.connectedPeers, with: .reliable)
-            } catch {
-                //print(error)
-            }
-        }
-        
-        if self.option[answerSelected - 1].letter! == self.question[0].correctAns! {
-            
-            question.remove(at: 0)
-            option.removeSubrange(0...3)
-            
-            if 0 != question.count {
-                
-                loadQuizData()
-                
-                print(question.count)
-                
-            }
-            else{
-                //performSegue(withIdentifier: "endingSegue", sender: Any?.self)
-                
-                EndingView.isHidden = false
-                questionNumLabel.isHidden = true
-                
-                buttonA.isEnabled = false
-                buttonB.isEnabled = false
-                buttonC.isEnabled = false
-                buttonD.isEnabled = false
-                
-                buttonA.setTitle("", for: .normal)
-                buttonB.setTitle("", for: .normal)
-                buttonC.setTitle("", for: .normal)
-                buttonD.setTitle("", for: .normal)
-                
-                option.removeAll()
-                question.removeAll()
-                numQuestions = 0
-                print(option.count)
-                
-            }
-        }
-    }
-    
-    func tiltButton(answerChoice: Int) {
-        if hapticSetting && answerChoice != answerSelected {
-            AudioServicesPlaySystemSound(1519)
-        }
-        
-        for answerButton in answerButtons {
-            answerButton.isSelected = false
-        }
-        
-        answerButtons[answerChoice - 1].isSelected = true
-        answerSelected = answerChoice
-        
-        if question.count != 0 {
-            broadcastAnswer()
-        }
-    }
-    
-    @IBAction func answerButtonPressed(_ sender: UIButton) {
-        if hapticSetting {
-            AudioServicesPlaySystemSound(1519)
-        }
-        
-        for answerButton in answerButtons {
-            answerButton.isSelected = false
-        }
-        
-        sender.isSelected = true
-        answerSelected = sender.tag
-        
-        if question.count != 0 {
-            broadcastAnswer()
-        }
-        
-    }
-    
-    
     @IBAction func restart(_ sender: UIButton) {
-        if quizID != 3 {
+        if quizID < endIndex {
             quizID += 1
-        }
-        else{
+        } else {
             quizID = 1
         }
-        EndingView.isHidden = true
         
+        EndingView.isHidden = true
         questionNumLabel.isHidden = false
         
-        buttonA.isEnabled = true
-        buttonB.isEnabled = true
-        buttonC.isEnabled = true
-        buttonD.isEnabled = true
+        for answerButton in answerButtons {
+            answerButton.isEnabled = true
+        }
        
         viewDidLoad()
     }
-    
-   /* override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //print(session.connectedPeers)
-        
-        if let identifier = segue.identifier {
-            switch identifier {
-            case "endingSegue":
-                let controller = segue.destination as! EndingViewController
-                
-                //if isHost {
-                    let trigger: Data? = "segue".data(using: .utf8)
-                    
-                    do {
-                        try session.send(trigger!, toPeers: session.connectedPeers, with: .reliable)
-                    } catch {
-                        print(error)
-                    }
-                //}
-                
-                controller.gameMode = self.gameMode
-                controller.session = self.session
-                controller.parentVC = self
-            default:
-                break
-            }
-        }
-    }*/
 }
