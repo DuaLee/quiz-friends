@@ -142,7 +142,16 @@ class QuizViewController: UIViewController, MCSessionDelegate {
             do {
                 try session.send(trigger!, toPeers: session.connectedPeers, with: .reliable)
             } catch {
-                print(error)
+                //print(error)
+            }
+        }
+        
+        print("\(self.option[sender.tag - 1].letter!) \(self.option[sender.tag - 1].choice!)")
+        if self.option[sender.tag - 1].letter! == self.question[0].correctAns!{
+            question.remove(at: 0)
+            option.removeSubrange(0...3)
+            if 0 < question.count {
+                loadQuizData()
             }
         }
     }
@@ -206,50 +215,6 @@ class QuizViewController: UIViewController, MCSessionDelegate {
             self.buttonC.setTitle("\(self.option[2].choice!)", for: .normal)
             
             self.buttonD.setTitle("\(self.option[3].choice!)", for: .normal)
-        }
-    }
-    @IBAction func aPressed(_ sender: UIButton) {
-        print("\(self.option[0].letter!) \(self.option[0].choice!)")
-        
-        if self.option[0].letter! == self.question[0].correctAns!{
-            question.remove(at: 0)
-            option.removeSubrange(0...3)
-            if 0 < question.count {
-                loadQuizData()
-            }
-        }
-    }
-   
-    @IBAction func bPressed(_ sender: UIButton) {
-        print("\(self.option[1].letter!) \(self.option[1].choice!)")
-        if self.option[1].letter! == self.question[0].correctAns!{
-            question.remove(at: 0)
-            option.removeSubrange(0...3)
-            if 0 < question.count {
-                loadQuizData()
-            }
-        }
-    }
-   
-    @IBAction func cPressed(_ sender: UIButton) {
-        print("\(self.option[2].letter!) \(self.option[2].choice!)")
-        if self.option[2].letter! == self.question[0].correctAns!{
-            question.remove(at: 0)
-            option.removeSubrange(0...3)
-            if 0 < question.count {
-                loadQuizData()
-            }
-        }
-    }
-   
-    @IBAction func dPressed(_ sender: UIButton) {
-        print("\(self.option[3].letter!) \(self.option[3].choice!)")
-        if self.option[3].letter! == self.question[0].correctAns!{
-            question.remove(at: 0)
-            option.removeSubrange(0...3)
-            if 0 < question.count {
-                loadQuizData()
-            }
         }
     }
 }

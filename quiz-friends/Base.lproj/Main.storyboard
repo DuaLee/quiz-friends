@@ -279,7 +279,6 @@
                                             <color key="baseBackgroundColor" systemColor="systemBrownColor"/>
                                         </buttonConfiguration>
                                         <connections>
-                                            <action selector="aPressed:" destination="Gba-el-IDC" eventType="touchUpInside" id="7Re-c9-qrh"/>
                                             <action selector="answerButtonPressed:" destination="Gba-el-IDC" eventType="touchUpInside" id="CK6-6h-S9M"/>
                                         </connections>
                                     </button>
@@ -291,8 +290,7 @@
                                             <color key="baseBackgroundColor" systemColor="systemBrownColor"/>
                                         </buttonConfiguration>
                                         <connections>
-                                            <action selector="answerButtonPressed:" destination="Gba-el-IDC" eventType="touchUpInside" id="QDz-Dr-zno"/>
-                                            <action selector="bPressed:" destination="Gba-el-IDC" eventType="touchUpInside" id="MOG-ez-ewA"/>
+                                            <action selector="answerButtonPressed:" destination="Gba-el-IDC" eventType="touchUpInside" id="1jK-ho-hWJ"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7I1-Uj-CED">
@@ -304,7 +302,6 @@
                                         </buttonConfiguration>
                                         <connections>
                                             <action selector="answerButtonPressed:" destination="Gba-el-IDC" eventType="touchUpInside" id="43Y-bZ-qYO"/>
-                                            <action selector="cPressed:" destination="Gba-el-IDC" eventType="touchUpInside" id="lH4-rr-pTQ"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J0W-jx-IVc">
@@ -319,7 +316,6 @@
                                         </buttonConfiguration>
                                         <connections>
                                             <action selector="answerButtonPressed:" destination="Gba-el-IDC" eventType="touchUpInside" id="tjM-5v-QzC"/>
-                                            <action selector="dPressed:" destination="Gba-el-IDC" eventType="touchUpInside" id="YOA-ZH-64P"/>
                                         </connections>
                                     </button>
                                 </subviews>
