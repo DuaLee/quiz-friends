@@ -14,16 +14,16 @@ struct QuizData: Decodable {
     //var questionNumber: Int
 }
 
-struct QuestionData: Codable {
+struct QuestionData: Decodable {
     
     let number: Int
     let questionSentence: String
-   // let options: [OptionData]
-    
+    let options: String
+    let correctOption: String
 }
 
-struct OptionData: Codable {
-    //let optionLetter: String
-   // let optionWord: String
-   // let correctOption: String
+struct OptionData: Decodable {
+     let optionLetter: String
+     let optionSentence: String
+   
 }

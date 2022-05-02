@@ -33,16 +33,22 @@ class QuizViewController: UIViewController, MCSessionDelegate {
     var session: MCSession!
     
     var numQuestions = 0
-    var i = 0
-    @Published var quizData = [QuizData]()
-    
+
     struct questionStruct {
-        var num: Int
-        var questionS: String
+        var num: Int?
+        var questionS: String?
+        var correctAns: String?
+        
+    }
+    
+    struct optionStruct {
+        var letter: String?
+        var choice: String?
         
     }
     
     var question = [questionStruct]()
+    var option = [optionStruct]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,16 +60,9 @@ class QuizViewController: UIViewController, MCSessionDelegate {
         
         setupUI(gameMode: gameMode)
         
-        let urlString = "http://www.people.vcu.edu/~ebulut/jsonFiles/quiz1.json"
-
-        self.loadJson(fromURLString: urlString) { (result) in
-            switch result {
-            case .success(let data):
-                self.parse(jsonData: data)
-            case .failure(let error):
-                print(error)
-            }
-        }
+        getJSONData()
+        
+    
     }
     
     func setupUI(gameMode: Int) {
@@ -112,48 +111,109 @@ class QuizViewController: UIViewController, MCSessionDelegate {
         print(answerSelected)
     }
     
-    private func parse(jsonData: Data) {
-        do {
-            let decodedData = try JSONDecoder().decode(QuizData.self, from: jsonData)
+    // Asynchronous Http call to your api url, using URLSession:
+    func getJSONData(){
+       
+       let urlString = "http://www.people.vcu.edu/~ebulut/jsonFiles/quiz1.json"
+        
+        
+        let url = URL(string: urlString)
+        
+        let session = URLSession.shared
+        
+        // create a data task
+        let task = session.dataTask(with: url!, completionHandler: { (data, response, error) in
             
-            print("Number of questions: ", decodedData.numberOfQuestions)
-            numQuestions = decodedData.numberOfQuestions
-            for i in 0..<numQuestions {
-                question.append(questionStruct(num: decodedData.questions[i].number, questionS: decodedData.questions[i].questionSentence ))
-                print("Number: ", decodedData.questions[i].number)
-                print("Question: ", decodedData.questions[i].questionSentence)
-                //print("Op: ", decodedData.questions[i].options.count)
+            if let result = data{
+    
+                do{
+                    let json = try JSONSerialization.jsonObject(with: result, options: .fragmentsAllowed)
+                    
+                    if let dictionary = json as? [String:AnyObject]{
+                        self.numQuestions = dictionary["numberOfQuestions"]! as! Int
+                        self.readJSONData(dictionary)
+                    }
+                }
+                catch{
+                    print("Error")
+                }
             }
-            //print("Question num: ", decodedData.questionNumber)
-            print("Topic: ", decodedData.topic)
-            print(numQuestions)
-            //numQuestions = decodedData.numberOfQuestions
-            
-            //print("Description: ", decodedData.description)
-            print("===================================")
-        } catch {
-            print("decode error")
+        })
+        // always call resume() to start
+        task.resume()
+    }
+
+    func readJSONData(_ json: [String: AnyObject]) {
+        if let questions = json["questions"] as? [[String: AnyObject]]  {
+            for q in questions {
+                question.append(questionStruct(num: q["number"]! as? Int, questionS: q["questionSentence"]! as? String, correctAns:q["correctOption"]! as? String))
+                if  let ops = q["options"] as? [String: AnyObject]{
+                    for options in ops {
+                        option.append(optionStruct(letter: options.key, choice: options.value as? String))
+                    }
+                }
+                loadQuizData()
+            }
         }
     }
     
-    private func loadJson(fromURLString urlString: String,
-                          completion: @escaping (Result<Data, Error>) -> Void) {
-        if let url = URL(string: urlString) {
-            let urlSession = URLSession(configuration: .default).dataTask(with: url) { (data, response, error) in
-                if let error = error {
-                    completion(.failure(error))
-                }
-                
-                if let data = data {
-                    DispatchQueue.main.async {
-                        self.questionNumLabel.text = "Question \(self.question[0].num)/\(self.numQuestions)"
-                        self.questionLabel.text = "\(self.question[0].questionS)"
-                    }
-                    completion(.success(data))
-                }
-            }
+    func loadQuizData(){
+        DispatchQueue.main.async {
+            self.questionNumLabel.text = "Question \(self.question[0].num!)/\(self.numQuestions)"
             
-            urlSession.resume()
+            self.questionLabel.text = "\(self.question[0].questionS!)"
+            
+            self.buttonA.setTitle("\(self.option[0].choice!)", for: .normal)
+            
+            self.buttonB.setTitle("\(self.option[1].choice!)", for: .normal)
+            
+            self.buttonC.setTitle("\(self.option[2].choice!)", for: .normal)
+            
+            self.buttonD.setTitle("\(self.option[3].choice!)", for: .normal)
+        }
+    }
+    @IBAction func aPressed(_ sender: UIButton) {
+        print("\(self.option[0].letter!) \(self.option[0].choice!)")
+        
+        if self.option[0].letter! == self.question[0].correctAns!{
+            question.remove(at: 0)
+            option.removeSubrange(0...3)
+            if 0 < question.count {
+                loadQuizData()
+            }
+        }
+    }
+   
+    @IBAction func bPressed(_ sender: UIButton) {
+        print("\(self.option[1].letter!) \(self.option[1].choice!)")
+        if self.option[1].letter! == self.question[0].correctAns!{
+            question.remove(at: 0)
+            option.removeSubrange(0...3)
+            if 0 < question.count {
+                loadQuizData()
+            }
+        }
+    }
+   
+    @IBAction func cPressed(_ sender: UIButton) {
+        print("\(self.option[2].letter!) \(self.option[2].choice!)")
+        if self.option[2].letter! == self.question[0].correctAns!{
+            question.remove(at: 0)
+            option.removeSubrange(0...3)
+            if 0 < question.count {
+                loadQuizData()
+            }
+        }
+    }
+   
+    @IBAction func dPressed(_ sender: UIButton) {
+        print("\(self.option[3].letter!) \(self.option[3].choice!)")
+        if self.option[3].letter! == self.question[0].correctAns!{
+            question.remove(at: 0)
+            option.removeSubrange(0...3)
+            if 0 < question.count {
+                loadQuizData()
+            }
         }
     }
 }
