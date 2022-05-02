@@ -367,7 +367,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Winner/Loser" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VAR-J1-TvP">
                                         <rect key="frame" x="137" y="146" width="100.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -455,6 +455,7 @@
                         <outlet property="buttonB" destination="CHc-TZ-a7K" id="5kN-Df-0yx"/>
                         <outlet property="buttonC" destination="7I1-Uj-CED" id="5Qk-R4-RgK"/>
                         <outlet property="buttonD" destination="J0W-jx-IVc" id="MED-GJ-LhO"/>
+                        <outlet property="endScreenLabel" destination="VAR-J1-TvP" id="Q2Y-TT-f1X"/>
                         <outlet property="player1" destination="jpj-e6-87x" id="LeD-cn-0tu"/>
                         <outlet property="player2" destination="vQw-QD-gua" id="GaH-W0-ccF"/>
                         <outlet property="player3" destination="uvb-8F-bCG" id="OlT-PI-ht5"/>

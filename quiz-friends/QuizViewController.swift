@@ -56,6 +56,7 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
     
     @IBOutlet weak var questionNumLabel: UILabel!
     @IBOutlet weak var questionLabel: UILabel!
+    @IBOutlet weak var endScreenLabel: UILabel!
     
     var gameMode: Int = 0
     
