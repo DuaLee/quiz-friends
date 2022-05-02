@@ -10,7 +10,7 @@ import MultipeerConnectivity
 import CoreMotion
 import AudioToolbox
 
-class QuizViewController: UIViewController, MCSessionDelegate {
+class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelegate {
     
     @IBOutlet weak var quizTitle: UINavigationItem!
     weak var parentVC: ViewController?
@@ -110,6 +110,91 @@ class QuizViewController: UIViewController, MCSessionDelegate {
         }
         
         getJSONData()
+        
+        drawTimer()
+    }
+    
+    let shapeLayer = CAShapeLayer()
+    let trackLayer = CAShapeLayer()
+    let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
+    
+    func drawTimer() {
+        var center = view.center
+        center.y -= 30
+        
+        let circularPath = UIBezierPath(arcCenter: center, radius: view.frame.width * 0.2, startAngle: -CGFloat.pi / 2, endAngle: 1.5 * CGFloat.pi, clockwise: true)
+        
+        shapeLayer.path = circularPath.cgPath
+        shapeLayer.strokeColor = CGColor(red: 0.9, green: 0.5, blue: 0.7, alpha: 0.3)
+        shapeLayer.fillColor = UIColor.clear.cgColor
+        shapeLayer.lineWidth = 20
+        shapeLayer.lineCap = .round
+        shapeLayer.strokeEnd = 0
+        
+        view.layer.insertSublayer(shapeLayer, at: 0)
+        
+        trackLayer.path = circularPath.cgPath
+        trackLayer.strokeColor = CGColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 0.1)
+        trackLayer.fillColor = UIColor.clear.cgColor
+        trackLayer.lineWidth = 20
+        trackLayer.lineCap = .round
+        
+        view.layer.insertSublayer(trackLayer, at: 0)
+        
+        let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
+        basicAnimation.delegate = self
+        
+        basicAnimation.toValue = 1
+        basicAnimation.duration = 20
+        basicAnimation.fillMode = .forwards
+        basicAnimation.isRemovedOnCompletion = false
+        
+        shapeLayer.add(basicAnimation, forKey: "circle")
+    }
+    
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        // MARK: Send answer choice to other clients (display red for incorrect, blue for correct), wait 3-5 seconds, move to next question
+        for answerButton in answerButtons {
+            answerButton.isEnabled = false
+        }
+        
+        var trigger = Data()
+        
+        if answerSelected > 0 {
+            trigger = self.option[answerSelected - 1].letter!.data(using: .utf8, allowLossyConversion: false)!
+        } else {
+            trigger = "0".data(using: .utf8, allowLossyConversion: false)!
+        }
+        
+        do {
+            try session.send(trigger, toPeers: session.connectedPeers, with: .reliable)
+        } catch {
+            //print(error)
+        }
+        
+        if self.option[answerSelected - 1].letter! == question[0].correctAns! {
+            playerIcons[0].backgroundColor = .blue
+        } else {
+            playerIcons[0].backgroundColor = .red
+        }
+        
+        Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { [self] _ in
+            shapeLayer.removeAnimation(forKey: "circle")
+            drawTimer()
+            
+            answerSelected = 0
+            for answerButton in answerButtons {
+                answerButton.isSelected = false
+                answerButton.isEnabled = true
+            }
+            
+            question.remove(at: 0)
+            option.removeSubrange(0...3)
+            
+            if 0 < question.count {
+                loadQuizData()
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -184,9 +269,17 @@ class QuizViewController: UIViewController, MCSessionDelegate {
                     playerIcons[playerIndex + 1].setTitle("", for: .normal)
                     playerIcons[playerIndex + 1].setImage(UIImage(systemName: "wifi.slash"), for: .normal)
                 }
-            } else {
+            } else if dataString == "selected" {
                 DispatchQueue.main.async { [self] in
                     playerIcons[playerIndex + 1].isSelected = true
+                }
+            } else {
+                DispatchQueue.main.async { [self] in
+                    if dataString == question[0].correctAns! {
+                        playerIcons[playerIndex + 1].backgroundColor = .blue
+                    } else {
+                        playerIcons[playerIndex + 1].backgroundColor = .red
+                    }
                 }
             }
         }
@@ -198,6 +291,50 @@ class QuizViewController: UIViewController, MCSessionDelegate {
     
     func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress) {
         
+    }
+    
+    func broadcastAnswer() {
+        if answerSelected != 0 {
+            playerIcons[0].isSelected = true
+            
+            let trigger = "selected".data(using: .utf8, allowLossyConversion: false)
+            
+            do {
+                try session.send(trigger!, toPeers: session.connectedPeers, with: .reliable)
+            } catch {
+                //print(error)
+            }
+        }
+    }
+    
+    func tiltButton(answerChoice: Int) {
+        if hapticSetting && answerChoice != answerSelected {
+            AudioServicesPlaySystemSound(1519)
+        }
+        
+        for answerButton in answerButtons {
+            answerButton.isSelected = false
+        }
+        
+        answerButtons[answerChoice - 1].isSelected = true
+        answerSelected = answerChoice
+        
+        broadcastAnswer()
+    }
+    
+    @IBAction func answerButtonPressed(_ sender: UIButton) {
+        if hapticSetting {
+            AudioServicesPlaySystemSound(1519)
+        }
+        
+        for answerButton in answerButtons {
+            answerButton.isSelected = false
+        }
+        
+        sender.isSelected = true
+        answerSelected = sender.tag
+        
+        broadcastAnswer()
     }
     
     // MARK: Asynchronous Http call to api url, using URLSession:
