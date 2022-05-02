@@ -108,21 +108,21 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
         DispatchQueue.main.async(execute: { [self] in
             switch state {
             case MCSessionState.connected:
-                print("Connected: \(peerID.displayName)")
+                //print("Connected: \(peerID.displayName)")
                 
                 if !isHost {
                     statusLabel.text = "Connected to host: \(peerID.displayName)."
                 }
                 
             case MCSessionState.connecting:
-                print("Connecting: \(peerID.displayName)")
+                //print("Connecting: \(peerID.displayName)")
                 
                 if !isHost {
                     statusLabel.text = "Connecting to host: \(peerID.displayName)"
                 }
                 
             case MCSessionState.notConnected:
-                print("Not Connected: \(peerID.displayName)")
+                //print("Not Connected: \(peerID.displayName)")
                 
                 if !isHost {
                     statusLabel.text = "Disconnected from host: \(peerID.displayName)"
@@ -142,7 +142,7 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
                 clientList.text = "Client List:"
                 
                 for peer in session.connectedPeers {
-                    print(peer.displayName)
+                    //print(peer.displayName)
                     clientList.text?.append("\n\(peer.displayName)")
                 }
             }
@@ -222,7 +222,7 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
             clientList.text = "Client List:"
             
             for peer in session.connectedPeers {
-                print(peer.displayName)
+                //print(peer.displayName)
                 clientList.text?.append("\n\(peer.displayName)")
             }
         } else {
@@ -231,7 +231,7 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print(session.connectedPeers)
+        //print(session.connectedPeers)
         
         if let identifier = segue.identifier {
             switch identifier {

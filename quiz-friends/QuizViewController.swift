@@ -35,6 +35,9 @@ class QuizViewController: UIViewController, MCSessionDelegate {
     
     var coreMotionManager = CMMotionManager()
     var tiltTimer = Timer()
+    var startingSet = false
+    var startingX = 0.0
+    var startingY = 0.0
     
     var numQuestions = 0
 
@@ -65,17 +68,33 @@ class QuizViewController: UIViewController, MCSessionDelegate {
         
         setupUI(gameMode: gameMode)
         
-        coreMotionManager.startAccelerometerUpdates()
-        
         if tiltSetting {
-            tiltTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
-                //print("TIMER UPDATE")
+            print("TEST")
+            coreMotionManager.startAccelerometerUpdates()
+            
+            tiltTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [self] _ in
                 if let data = self.coreMotionManager.accelerometerData {
-                    let x = data.acceleration.x
-                    let y = data.acceleration.y
-                    let z = data.acceleration.z
-                    
-                    print(x, y, z)
+                    if !startingSet {
+                        startingX = data.acceleration.x
+                        startingY = data.acceleration.y
+                        
+                        startingSet = true
+                    } else {
+                        let x = data.acceleration.x - startingX
+                        let y = data.acceleration.y - startingY
+
+                        print(x, y)
+
+                        if x > 0.2 {
+                            tiltButton(answerChoice: 4)
+                        } else if x < -0.2 {
+                            tiltButton(answerChoice: 3)
+                        } else if y > 0.2 {
+                            tiltButton(answerChoice: 1)
+                        } else if y < -0.2 {
+                            tiltButton(answerChoice: 2)
+                        }
+                    }
                 }
             }
         }
@@ -132,15 +151,7 @@ class QuizViewController: UIViewController, MCSessionDelegate {
         
     }
     
-    @IBAction func answerButtonPressed(_ sender: UIButton) {
-        for answerButton in answerButtons {
-            answerButton.isSelected = false
-        }
-        
-        sender.isSelected = true
-        answerSelected = sender.tag
-        //print(answerSelected)
-        
+    func broadcastAnswer() {
         if answerSelected != 0 {
             playerIcons[0].isSelected = true
             
@@ -154,13 +165,58 @@ class QuizViewController: UIViewController, MCSessionDelegate {
         }
         
 //        print("\(self.option[sender.tag - 1].letter!) \(self.option[sender.tag - 1].choice!)")
-        if self.option[sender.tag - 1].letter! == self.question[0].correctAns!{
+        if self.option[answerSelected - 1].letter! == self.question[0].correctAns!{
             question.remove(at: 0)
             option.removeSubrange(0...3)
+            
             if 0 < question.count {
                 loadQuizData()
             }
         }
+    }
+    
+    func tiltButton(answerChoice: Int) {
+        for answerButton in answerButtons {
+            answerButton.isSelected = false
+        }
+        
+        answerButtons[answerChoice - 1].isSelected = true
+        answerSelected = answerChoice
+        
+        broadcastAnswer()
+    }
+    
+    @IBAction func answerButtonPressed(_ sender: UIButton) {
+        for answerButton in answerButtons {
+            answerButton.isSelected = false
+        }
+        
+        sender.isSelected = true
+        answerSelected = sender.tag
+        
+        broadcastAnswer()
+        //print(answerSelected)
+        
+//        if answerSelected != 0 {
+//            playerIcons[0].isSelected = true
+//
+//            let trigger: Data? = "\(answerSelected)".data(using: .utf8)
+//
+//            do {
+//                try session.send(trigger!, toPeers: session.connectedPeers, with: .reliable)
+//            } catch {
+//                //print(error)
+//            }
+//        }
+//
+////        print("\(self.option[sender.tag - 1].letter!) \(self.option[sender.tag - 1].choice!)")
+//        if self.option[sender.tag - 1].letter! == self.question[0].correctAns!{
+//            question.remove(at: 0)
+//            option.removeSubrange(0...3)
+//            if 0 < question.count {
+//                loadQuizData()
+//            }
+//        }
     }
     
     // Asynchronous Http call to your api url, using URLSession:
@@ -169,10 +225,10 @@ class QuizViewController: UIViewController, MCSessionDelegate {
         let urlString = "http://www.people.vcu.edu/~ebulut/jsonFiles/quiz1.json"
         let url = URL(string: urlString)
         
-        let session = URLSession.shared
+        let urlSession = URLSession.shared
         
         // create a data task
-        let task = session.dataTask(with: url!, completionHandler: { (data, response, error) in
+        let task = urlSession.dataTask(with: url!, completionHandler: { (data, response, error) in
             
             if let result = data{
     
