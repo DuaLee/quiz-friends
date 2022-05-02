@@ -8,6 +8,7 @@
 import UIKit
 import MultipeerConnectivity
 import CoreMotion
+import AudioToolbox
 
 class QuizViewController: UIViewController, MCSessionDelegate {
     
@@ -83,7 +84,7 @@ class QuizViewController: UIViewController, MCSessionDelegate {
                         let x = data.acceleration.x - startingX
                         let y = data.acceleration.y - startingY
 
-                        print(x, y)
+                        //print(x, y)
 
                         if x > 0.2 {
                             tiltButton(answerChoice: 4)
@@ -139,6 +140,7 @@ class QuizViewController: UIViewController, MCSessionDelegate {
         let playerIndex = session.connectedPeers.firstIndex(of: peerID)
         
         DispatchQueue.main.async { [self] in
+            print(dataString)
             playerIcons[playerIndex! + 1].isSelected = true
         }
     }
@@ -176,6 +178,10 @@ class QuizViewController: UIViewController, MCSessionDelegate {
     }
     
     func tiltButton(answerChoice: Int) {
+        if hapticSetting && answerChoice != answerSelected{
+            AudioServicesPlaySystemSound(1519)
+        }
+        
         for answerButton in answerButtons {
             answerButton.isSelected = false
         }
@@ -187,6 +193,10 @@ class QuizViewController: UIViewController, MCSessionDelegate {
     }
     
     @IBAction func answerButtonPressed(_ sender: UIButton) {
+        if hapticSetting {
+            AudioServicesPlaySystemSound(1519)
+        }
+        
         for answerButton in answerButtons {
             answerButton.isSelected = false
         }

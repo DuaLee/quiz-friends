@@ -147,6 +147,7 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" image="play.fill" catalog="system" cornerStyle="small"/>
                                         <connections>
+                                            <action selector="playButtonPressed:" destination="Nfa-8a-wxI" eventType="touchUpInside" id="k3G-i5-j55"/>
                                             <segue destination="Gba-el-IDC" kind="show" identifier="quizSegue" id="kTx-gu-7iR"/>
                                         </connections>
                                     </button>

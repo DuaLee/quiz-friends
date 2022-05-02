@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AudioToolbox
 
 var tiltSetting = false
 var hapticSetting = false
@@ -17,6 +18,12 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tiltButton.setTitle(" Enable Tilt to Answer", for: .normal)
+        tiltButton.setTitle(" Disable Tilt to Answer", for: .selected)
+        
+        hapticButton.setTitle(" Enable Haptic Feedback", for: .normal)
+        hapticButton.setTitle(" Disable Haptic Feedback", for: .selected)
 
         if tiltSetting {
             tiltButton.isSelected = true
@@ -45,8 +52,10 @@ class SettingsViewController: UIViewController {
             switch sender.tag {
             case 1:
                 tiltSetting = false
+                
             case 2:
                 hapticSetting = false
+                
             default:
                 break
             }
@@ -56,8 +65,11 @@ class SettingsViewController: UIViewController {
             switch sender.tag {
             case 1:
                 tiltSetting = true
+                
             case 2:
                 hapticSetting = true
+                AudioServicesPlaySystemSound(4095)
+                
             default:
                 break
             }

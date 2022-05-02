@@ -7,6 +7,7 @@
 
 import UIKit
 import MultipeerConnectivity
+import AudioToolbox
 
 class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessionDelegate, MCNearbyServiceAdvertiserDelegate {
 
@@ -40,6 +41,10 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
     }
 
     @IBAction func buttonPressed(_ sender: UIButton) {
+        if hapticSetting {
+            AudioServicesPlaySystemSound(1519)
+        }
+        
         switch sender.tag {
         case 1:
             visibilityButton.isEnabled = true
@@ -79,6 +84,10 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
     }
     
     @IBAction func hostButtonPressed(_ sender: UIButton) {
+        if hapticSetting {
+            AudioServicesPlaySystemSound(1519)
+        }
+        
         singleButton.isSelected = false
         visibilityButton.isSelected = false
         
@@ -95,6 +104,12 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
     
     func stopClient() {
         assistant.stopAdvertisingPeer()
+    }
+    
+    @IBAction func playButtonPressed(_ sender: Any) {
+        if hapticSetting {
+            AudioServicesPlaySystemSound(1521)
+        }
     }
     
     func startServer() {
