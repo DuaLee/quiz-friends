@@ -12,6 +12,8 @@ import AudioToolbox
 
 class QuizViewController: UIViewController, MCSessionDelegate {
     
+    weak var parentVC: ViewController?
+    
     @IBOutlet weak var player1: UIButton!
     @IBOutlet weak var player2: UIButton!
     @IBOutlet weak var player3: UIButton!
@@ -33,6 +35,7 @@ class QuizViewController: UIViewController, MCSessionDelegate {
     
     var myPeerID: MCPeerID!
     var session: MCSession!
+    var startingPeers: [MCPeerID] = []
     
     var coreMotionManager = CMMotionManager()
     var tiltTimer = Timer()
@@ -59,6 +62,8 @@ class QuizViewController: UIViewController, MCSessionDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        startingPeers = session.connectedPeers
+        
         self.myPeerID = MCPeerID(displayName: UIDevice.current.name)
         session.delegate = self
         
@@ -68,7 +73,6 @@ class QuizViewController: UIViewController, MCSessionDelegate {
         setupUI(gameMode: gameMode)
         
         if tiltSetting {
-            print("TEST")
             coreMotionManager.startAccelerometerUpdates()
             
             tiltTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [self] _ in
@@ -102,7 +106,21 @@ class QuizViewController: UIViewController, MCSessionDelegate {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        parentVC!.viewDidLoad()
+        
         tiltTimer.invalidate()
+        
+        let trigger = "disconnect".data(using: .utf8, allowLossyConversion: false)
+        
+        do {
+            try session.send(trigger!, toPeers: session.connectedPeers, with: .reliable)
+        } catch {
+            print(error)
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        session.disconnect()
     }
     
     override func becomeFirstResponder() -> Bool {
@@ -150,12 +168,20 @@ class QuizViewController: UIViewController, MCSessionDelegate {
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         let dataString = String(decoding: data, as: UTF8.self)
+        print(dataString)
         
-        let playerIndex = session.connectedPeers.firstIndex(of: peerID)
-        
-        DispatchQueue.main.async { [self] in
-            print(dataString)
-            playerIcons[playerIndex! + 1].isSelected = true
+        if let playerIndex = startingPeers.firstIndex(of: peerID) {
+            if dataString == "disconnect" {
+                DispatchQueue.main.async { [self] in
+                    playerIcons[playerIndex + 1].isEnabled = false
+                    playerIcons[playerIndex + 1].setTitle("", for: .normal)
+                    playerIcons[playerIndex + 1].setImage(UIImage(systemName: "wifi.slash"), for: .normal)
+                }
+            } else {
+                DispatchQueue.main.async { [self] in
+                    playerIcons[playerIndex + 1].isSelected = true
+                }
+            }
         }
     }
     
@@ -171,7 +197,7 @@ class QuizViewController: UIViewController, MCSessionDelegate {
         if answerSelected != 0 {
             playerIcons[0].isSelected = true
             
-            let trigger: Data? = "\(answerSelected)".data(using: .utf8)
+            let trigger = "\(answerSelected)".data(using: .utf8, allowLossyConversion: false)
             
             do {
                 try session.send(trigger!, toPeers: session.connectedPeers, with: .reliable)

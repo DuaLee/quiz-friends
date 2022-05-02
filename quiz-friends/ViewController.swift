@@ -28,6 +28,9 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        isHost = false
+        visibilityButton.isEnabled = true
+        
         self.myPeerID = MCPeerID(displayName: UIDevice.current.name)
         self.session = MCSession(peer: myPeerID, securityIdentity: nil, encryptionPreference: .required)
         
@@ -141,6 +144,8 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
                 
                 if !isHost {
                     statusLabel.text = "Disconnected from host: \(peerID.displayName)"
+                } else {
+                    isHost = false
                 }
                 
             default:
@@ -160,6 +165,8 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
                     //print(peer.displayName)
                     clientList.text?.append("\n\(peer.displayName)")
                 }
+            } else {
+                clientList.text = ""
             }
         })
     }
@@ -233,6 +240,7 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
         singleButton.isSelected = false
         visibilityButton.isSelected = false
         playButton.isEnabled = false
+        statusLabel.text = "Select a gamemode to start."
         
         if isHost {
             if session.connectedPeers.count > 0 {
@@ -274,6 +282,7 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
                 
                 controller.gameMode = self.gameMode
                 controller.session = self.session
+                controller.parentVC = self
             default:
                 break
             }
