@@ -7,6 +7,7 @@
 
 import UIKit
 import MultipeerConnectivity
+import CoreMotion
 
 class QuizViewController: UIViewController, MCSessionDelegate {
     
@@ -32,6 +33,8 @@ class QuizViewController: UIViewController, MCSessionDelegate {
     var myPeerID: MCPeerID!
     var session: MCSession!
     
+    var coreMotionManager = CMMotionManager()
+    
     var numQuestions = 0
 
     struct questionStruct {
@@ -53,6 +56,7 @@ class QuizViewController: UIViewController, MCSessionDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.myPeerID = MCPeerID(displayName: UIDevice.current.name)
         session.delegate = self
         
         playerIcons = [player1, player2, player3, player4]
@@ -60,9 +64,19 @@ class QuizViewController: UIViewController, MCSessionDelegate {
         
         setupUI(gameMode: gameMode)
         
-        getJSONData()
+        coreMotionManager.startAccelerometerUpdates()
         
-    
+        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
+            print("TIMER UPDATE")
+            let data = self.coreMotionManager.accelerometerData
+            let x = data?.acceleration.x
+            let y = data?.acceleration.y
+            let z = data?.acceleration.z
+            
+            print(data?.acceleration.x)
+        }
+        
+        getJSONData()
     }
     
     func setupUI(gameMode: Int) {
@@ -73,10 +87,13 @@ class QuizViewController: UIViewController, MCSessionDelegate {
             playerIcon.setTitle("", for: .normal)
         }
         
+        playerIcons[0].setTitle(myPeerID.displayName, for: .normal)
+        playerIcons[0].isEnabled = true
+        
         if gameMode == 2 {
             for index in 0..<session.connectedPeers.count {
-                playerIcons[index].isEnabled = true
-                playerIcons[index].setTitle("\(session.connectedPeers[index].displayName)", for: .normal)
+                playerIcons[index + 1].isEnabled = true
+                playerIcons[index + 1].setTitle("\(session.connectedPeers[index].displayName)", for: .normal)
             }
         }
     }
@@ -90,7 +107,13 @@ class QuizViewController: UIViewController, MCSessionDelegate {
     }
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
+        let dataString = String(decoding: data, as: UTF8.self)
         
+        let playerIndex = session.connectedPeers.firstIndex(of: peerID)
+        
+        DispatchQueue.main.async { [self] in
+            playerIcons[playerIndex! + 1].isSelected = true
+        }
     }
     
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
@@ -108,7 +131,19 @@ class QuizViewController: UIViewController, MCSessionDelegate {
         
         sender.isSelected = true
         answerSelected = sender.tag
-        print(answerSelected)
+        //print(answerSelected)
+        
+        if answerSelected != 0 {
+            playerIcons[0].isSelected = true
+            
+            let trigger: Data? = "\(answerSelected)".data(using: .utf8)
+            
+            do {
+                try session.send(trigger!, toPeers: session.connectedPeers, with: .reliable)
+            } catch {
+                print(error)
+            }
+        }
     }
     
     // Asynchronous Http call to your api url, using URLSession:
