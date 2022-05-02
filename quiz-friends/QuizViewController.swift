@@ -180,8 +180,7 @@ class QuizViewController: UIViewController, MCSessionDelegate {
             }
         }
         
-//        print("\(self.option[sender.tag - 1].letter!) \(self.option[sender.tag - 1].choice!)")
-        if self.option[answerSelected - 1].letter! == self.question[0].correctAns!{
+        if self.option[answerSelected - 1].letter! == self.question[0].correctAns! {
             question.remove(at: 0)
             option.removeSubrange(0...3)
             
@@ -219,75 +218,50 @@ class QuizViewController: UIViewController, MCSessionDelegate {
         answerSelected = sender.tag
         
         broadcastAnswer()
-        //print(answerSelected)
-        
-//        if answerSelected != 0 {
-//            playerIcons[0].isSelected = true
-//
-//            let trigger: Data? = "\(answerSelected)".data(using: .utf8)
-//
-//            do {
-//                try session.send(trigger!, toPeers: session.connectedPeers, with: .reliable)
-//            } catch {
-//                //print(error)
-//            }
-//        }
-//
-////        print("\(self.option[sender.tag - 1].letter!) \(self.option[sender.tag - 1].choice!)")
-//        if self.option[sender.tag - 1].letter! == self.question[0].correctAns!{
-//            question.remove(at: 0)
-//            option.removeSubrange(0...3)
-//            if 0 < question.count {
-//                loadQuizData()
-//            }
-//        }
     }
     
-    // Asynchronous Http call to your api url, using URLSession:
-    func getJSONData(){
+    // MARK: Asynchronous Http call to api url, using URLSession:
+    func getJSONData() {
        
         let urlString = "http://www.people.vcu.edu/~ebulut/jsonFiles/quiz1.json"
         let url = URL(string: urlString)
         
         let urlSession = URLSession.shared
-        
-        // create a data task
         let task = urlSession.dataTask(with: url!, completionHandler: { (data, response, error) in
             
-            if let result = data{
-    
-                do{
+            if let result = data {
+                do {
                     let json = try JSONSerialization.jsonObject(with: result, options: .fragmentsAllowed)
                     
-                    if let dictionary = json as? [String:AnyObject]{
+                    if let dictionary = json as? [String:AnyObject] {
                         self.numQuestions = dictionary["numberOfQuestions"]! as! Int
                         self.readJSONData(dictionary)
                     }
-                }
-                catch{
+                } catch {
                     print("Error")
                 }
             }
         })
-        // always call resume() to start
+        
         task.resume()
     }
 
     func readJSONData(_ json: [String: AnyObject]) {
-        if let questions = json["questions"] as? [[String: AnyObject]]  {
+        if let questions = json["questions"] as? [[String: AnyObject]] {
             for q in questions {
                 question.append(questionStruct(num: q["number"]! as? Int, questionS: q["questionSentence"]! as? String, correctAns:q["correctOption"]! as? String))
-                if  let ops = q["options"] as? [String: AnyObject]{
+                if let ops = q["options"] as? [String: AnyObject] {
                     for options in ops {
                         option.append(optionStruct(letter: options.key, choice: options.value as? String))
                     }
                 }
+                
                 loadQuizData()
             }
         }
     }
     
-    func loadQuizData(){
+    func loadQuizData() {
         DispatchQueue.main.async {
             self.questionNumLabel.text = "Question \(self.question[0].num!)/\(self.numQuestions)"
             
