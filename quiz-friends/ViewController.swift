@@ -238,8 +238,6 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
             case "quizSegue":
                 let controller = segue.destination as! QuizViewController
                 
-                let trigger: Data? = "segue".data(using: .utf8)
-                
                 if isHost {
                     let trigger: Data? = "segue".data(using: .utf8)
                     
