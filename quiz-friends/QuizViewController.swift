@@ -12,6 +12,7 @@ import AudioToolbox
 
 class QuizViewController: UIViewController, MCSessionDelegate {
     
+    @IBOutlet weak var quizTitle: UINavigationItem!
     weak var parentVC: ViewController?
     
     @IBOutlet weak var player1: UIButton!
@@ -26,7 +27,10 @@ class QuizViewController: UIViewController, MCSessionDelegate {
     @IBOutlet weak var buttonD: UIButton!
     var answerButtons: [UIButton] = []
     
+    @IBOutlet weak var restartButton: UIButton!
+    
     var answerSelected = 0
+    var quizID = 1
     
     @IBOutlet weak var questionNumLabel: UILabel!
     @IBOutlet weak var questionLabel: UILabel!
@@ -44,6 +48,7 @@ class QuizViewController: UIViewController, MCSessionDelegate {
     var startingY = 0.0
     
     var numQuestions = 0
+    var qTitle = ""
 
     struct questionStruct {
         var num: Int?
@@ -58,6 +63,8 @@ class QuizViewController: UIViewController, MCSessionDelegate {
     
     var question = [questionStruct]()
     var option = [optionStruct]()
+    
+    @IBOutlet weak var EndingView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -193,63 +200,10 @@ class QuizViewController: UIViewController, MCSessionDelegate {
         
     }
     
-    func broadcastAnswer() {
-        if answerSelected != 0 {
-            playerIcons[0].isSelected = true
-            
-            let trigger = "\(answerSelected)".data(using: .utf8, allowLossyConversion: false)
-            
-            do {
-                try session.send(trigger!, toPeers: session.connectedPeers, with: .reliable)
-            } catch {
-                //print(error)
-            }
-        }
-        
-        if self.option[answerSelected - 1].letter! == self.question[0].correctAns! {
-            question.remove(at: 0)
-            option.removeSubrange(0...3)
-            
-            if 0 < question.count {
-                loadQuizData()
-            }
-        }
-    }
-    
-    func tiltButton(answerChoice: Int) {
-        if hapticSetting && answerChoice != answerSelected {
-            AudioServicesPlaySystemSound(1519)
-        }
-        
-        for answerButton in answerButtons {
-            answerButton.isSelected = false
-        }
-        
-        answerButtons[answerChoice - 1].isSelected = true
-        answerSelected = answerChoice
-        
-        broadcastAnswer()
-    }
-    
-    @IBAction func answerButtonPressed(_ sender: UIButton) {
-        if hapticSetting {
-            AudioServicesPlaySystemSound(1519)
-        }
-        
-        for answerButton in answerButtons {
-            answerButton.isSelected = false
-        }
-        
-        sender.isSelected = true
-        answerSelected = sender.tag
-        
-        broadcastAnswer()
-    }
-    
     // MARK: Asynchronous Http call to api url, using URLSession:
     func getJSONData() {
        
-        let urlString = "http://www.people.vcu.edu/~ebulut/jsonFiles/quiz1.json"
+        let urlString = "http://www.people.vcu.edu/~ebulut/jsonFiles/quiz\(quizID).json"
         let url = URL(string: urlString)
         
         let urlSession = URLSession.shared
@@ -261,6 +215,7 @@ class QuizViewController: UIViewController, MCSessionDelegate {
                     
                     if let dictionary = json as? [String:AnyObject] {
                         self.numQuestions = dictionary["numberOfQuestions"]! as! Int
+                        self.qTitle = dictionary["topic"]! as! String
                         self.readJSONData(dictionary)
                     }
                 } catch {
@@ -291,6 +246,8 @@ class QuizViewController: UIViewController, MCSessionDelegate {
         DispatchQueue.main.async {
             self.questionNumLabel.text = "Question \(self.question[0].num!)/\(self.numQuestions)"
             
+            self.quizTitle.title = "\(self.qTitle)"
+            
             self.questionLabel.text = "\(self.question[0].questionS!)"
             
             self.buttonA.setTitle("\(self.option[0].choice!)", for: .normal)
@@ -302,4 +259,136 @@ class QuizViewController: UIViewController, MCSessionDelegate {
             self.buttonD.setTitle("\(self.option[3].choice!)", for: .normal)
         }
     }
+    
+    func broadcastAnswer() {
+        if answerSelected != 0 {
+            playerIcons[0].isSelected = true
+            
+            let trigger = "\(answerSelected)".data(using: .utf8, allowLossyConversion: false)
+            
+            do {
+                try session.send(trigger!, toPeers: session.connectedPeers, with: .reliable)
+            } catch {
+                //print(error)
+            }
+        }
+        
+        if self.option[answerSelected - 1].letter! == self.question[0].correctAns! {
+            
+            question.remove(at: 0)
+            option.removeSubrange(0...3)
+            
+            if 0 != question.count {
+                
+                loadQuizData()
+                
+                print(question.count)
+                
+            }
+            else{
+                //performSegue(withIdentifier: "endingSegue", sender: Any?.self)
+                
+                EndingView.isHidden = false
+                questionNumLabel.isHidden = true
+                
+                buttonA.isEnabled = false
+                buttonB.isEnabled = false
+                buttonC.isEnabled = false
+                buttonD.isEnabled = false
+                
+                buttonA.setTitle("", for: .normal)
+                buttonB.setTitle("", for: .normal)
+                buttonC.setTitle("", for: .normal)
+                buttonD.setTitle("", for: .normal)
+                
+                option.removeAll()
+                question.removeAll()
+                numQuestions = 0
+                print(option.count)
+                
+            }
+        }
+    }
+    
+    func tiltButton(answerChoice: Int) {
+        if hapticSetting && answerChoice != answerSelected {
+            AudioServicesPlaySystemSound(1519)
+        }
+        
+        for answerButton in answerButtons {
+            answerButton.isSelected = false
+        }
+        
+        answerButtons[answerChoice - 1].isSelected = true
+        answerSelected = answerChoice
+        
+        if question.count != 0 {
+            broadcastAnswer()
+        }
+    }
+    
+    @IBAction func answerButtonPressed(_ sender: UIButton) {
+        if hapticSetting {
+            AudioServicesPlaySystemSound(1519)
+        }
+        
+        for answerButton in answerButtons {
+            answerButton.isSelected = false
+        }
+        
+        sender.isSelected = true
+        answerSelected = sender.tag
+        
+        if question.count != 0 {
+            broadcastAnswer()
+        }
+        
+    }
+    
+    
+    @IBAction func restart(_ sender: UIButton) {
+        if quizID != 3 {
+            quizID += 1
+        }
+        else{
+            quizID = 1
+        }
+        EndingView.isHidden = true
+        
+        questionNumLabel.isHidden = false
+        
+        buttonA.isEnabled = true
+        buttonB.isEnabled = true
+        buttonC.isEnabled = true
+        buttonD.isEnabled = true
+       
+        viewDidLoad()
+    }
+    
+   /* override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //print(session.connectedPeers)
+        
+        if let identifier = segue.identifier {
+            switch identifier {
+            case "endingSegue":
+                let controller = segue.destination as! EndingViewController
+                
+                //if isHost {
+                    let trigger: Data? = "segue".data(using: .utf8)
+                    
+                    do {
+                        try session.send(trigger!, toPeers: session.connectedPeers, with: .reliable)
+                    } catch {
+                        print(error)
+                    }
+                //}
+                
+                controller.gameMode = self.gameMode
+                controller.session = self.session
+                controller.parentVC = self
+            default:
+                break
+            }
+        }
+    }*/
 }
