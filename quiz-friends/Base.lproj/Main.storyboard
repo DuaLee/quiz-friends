@@ -72,6 +72,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Settings" id="s4E-0V-tyE"/>
+                    <connections>
+                        <outlet property="hapticButton" destination="k6l-GA-hMx" id="ehO-xC-3MZ"/>
+                        <outlet property="tiltButton" destination="z9i-lU-UcG" id="60h-Yi-gEf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aBf-J1-STM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

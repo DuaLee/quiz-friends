@@ -34,6 +34,7 @@ class QuizViewController: UIViewController, MCSessionDelegate {
     var session: MCSession!
     
     var coreMotionManager = CMMotionManager()
+    var tiltTimer = Timer()
     
     var numQuestions = 0
 
@@ -66,18 +67,24 @@ class QuizViewController: UIViewController, MCSessionDelegate {
         
         coreMotionManager.startAccelerometerUpdates()
         
-        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
-            //print("TIMER UPDATE")
-            if let data = self.coreMotionManager.accelerometerData {
-                let x = data.acceleration.x
-                let y = data.acceleration.y
-                let z = data.acceleration.z
-                
-                print(x, y, z)
+        if tiltSetting {
+            tiltTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
+                //print("TIMER UPDATE")
+                if let data = self.coreMotionManager.accelerometerData {
+                    let x = data.acceleration.x
+                    let y = data.acceleration.y
+                    let z = data.acceleration.z
+                    
+                    print(x, y, z)
+                }
             }
         }
         
         getJSONData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        tiltTimer.invalidate()
     }
     
     func setupUI(gameMode: Int) {
@@ -146,7 +153,7 @@ class QuizViewController: UIViewController, MCSessionDelegate {
             }
         }
         
-        print("\(self.option[sender.tag - 1].letter!) \(self.option[sender.tag - 1].choice!)")
+//        print("\(self.option[sender.tag - 1].letter!) \(self.option[sender.tag - 1].choice!)")
         if self.option[sender.tag - 1].letter! == self.question[0].correctAns!{
             question.remove(at: 0)
             option.removeSubrange(0...3)
@@ -159,9 +166,7 @@ class QuizViewController: UIViewController, MCSessionDelegate {
     // Asynchronous Http call to your api url, using URLSession:
     func getJSONData(){
        
-       let urlString = "http://www.people.vcu.edu/~ebulut/jsonFiles/quiz1.json"
-        
-        
+        let urlString = "http://www.people.vcu.edu/~ebulut/jsonFiles/quiz1.json"
         let url = URL(string: urlString)
         
         let session = URLSession.shared

@@ -7,12 +7,24 @@
 
 import UIKit
 
+var tiltSetting = false
+var hapticSetting = false
+
 class SettingsViewController: UIViewController {
 
+    @IBOutlet weak var tiltButton: UIButton!
+    @IBOutlet weak var hapticButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        if tiltSetting {
+            tiltButton.isSelected = true
+        }
+        
+        if hapticSetting {
+            hapticButton.isSelected = true
+        }
     }
     
 
@@ -29,8 +41,26 @@ class SettingsViewController: UIViewController {
     @IBAction func buttonPressed(_ sender: UIButton) {
         if sender.isSelected {
             sender.isSelected = false
+            
+            switch sender.tag {
+            case 1:
+                tiltSetting = false
+            case 2:
+                hapticSetting = false
+            default:
+                break
+            }
         } else {
             sender.isSelected = true
+            
+            switch sender.tag {
+            case 1:
+                tiltSetting = true
+            case 2:
+                hapticSetting = true
+            default:
+                break
+            }
         }
     }
 }
