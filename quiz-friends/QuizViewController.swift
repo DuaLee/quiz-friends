@@ -67,13 +67,14 @@ class QuizViewController: UIViewController, MCSessionDelegate {
         coreMotionManager.startAccelerometerUpdates()
         
         Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
-            print("TIMER UPDATE")
-            let data = self.coreMotionManager.accelerometerData
-            let x = data?.acceleration.x
-            let y = data?.acceleration.y
-            let z = data?.acceleration.z
-            
-            print(data?.acceleration.x)
+            //print("TIMER UPDATE")
+            if let data = self.coreMotionManager.accelerometerData {
+                let x = data.acceleration.x
+                let y = data.acceleration.y
+                let z = data.acceleration.z
+                
+                print(x, y, z)
+            }
         }
         
         getJSONData()
