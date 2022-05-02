@@ -23,7 +23,7 @@
                                         <rect key="frame" x="0.0" y="20" width="374" height="367"/>
                                         <subviews>
                                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z9i-lU-UcG">
-                                                <rect key="frame" x="0.0" y="0.0" width="374" height="173.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="109"/>
                                                 <color key="tintColor" systemColor="systemOrangeColor"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="tinted" image="arrow.up.and.down.and.arrow.left.and.right" catalog="system" title=" Enable Tilt to Answer" cornerStyle="small">
@@ -31,21 +31,31 @@
                                                     <color key="baseBackgroundColor" systemColor="systemOrangeColor"/>
                                                 </buttonConfiguration>
                                                 <connections>
-                                                    <action selector="buttonPressed:" destination="Nfa-8a-wxI" eventType="touchUpInside" id="HyG-6c-OzZ"/>
                                                     <action selector="buttonPressed:" destination="jw1-pX-oa5" eventType="touchUpInside" id="xqn-4Z-l5x"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k6l-GA-hMx">
-                                                <rect key="frame" x="0.0" y="193.5" width="374" height="173.5"/>
+                                                <rect key="frame" x="0.0" y="129" width="374" height="109"/>
                                                 <color key="tintColor" systemColor="systemOrangeColor"/>
                                                 <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="tinted" image="iphone.radiowaves.left.and.right" catalog="system" title=" Enable Haptic Feedback" cornerStyle="small">
+                                                <buttonConfiguration key="configuration" style="tinted" image="waveform.path" catalog="system" title=" Enable Haptic Feedback" cornerStyle="small">
                                                     <fontDescription key="titleFontDescription" type="system" pointSize="17"/>
                                                     <color key="baseBackgroundColor" systemColor="systemOrangeColor"/>
                                                 </buttonConfiguration>
                                                 <connections>
                                                     <action selector="buttonPressed:" destination="jw1-pX-oa5" eventType="touchUpInside" id="mgv-Vu-589"/>
-                                                    <action selector="hostButtonPressed:" destination="Nfa-8a-wxI" eventType="touchUpInside" id="Apr-MU-989"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Zt-iY-BHk">
+                                                <rect key="frame" x="0.0" y="258" width="374" height="109"/>
+                                                <color key="tintColor" systemColor="systemOrangeColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="tinted" image="iphone.radiowaves.left.and.right" catalog="system" title=" Enable Shake to Roulette" cornerStyle="small">
+                                                    <fontDescription key="titleFontDescription" type="system" pointSize="17"/>
+                                                    <color key="baseBackgroundColor" systemColor="systemOrangeColor"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="buttonPressed:" destination="jw1-pX-oa5" eventType="touchUpInside" id="OLJ-jL-LXz"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -74,6 +84,7 @@
                     <navigationItem key="navigationItem" title="Settings" id="s4E-0V-tyE"/>
                     <connections>
                         <outlet property="hapticButton" destination="k6l-GA-hMx" id="ehO-xC-3MZ"/>
+                        <outlet property="shakeButton" destination="4Zt-iY-BHk" id="3L8-9h-sIw"/>
                         <outlet property="tiltButton" destination="z9i-lU-UcG" id="60h-Yi-gEf"/>
                     </connections>
                 </viewController>
@@ -406,6 +417,7 @@
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
         <image name="server.rack" catalog="system" width="128" height="93"/>
+        <image name="waveform.path" catalog="system" width="128" height="117"/>
         <image name="wifi" catalog="system" width="128" height="91"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

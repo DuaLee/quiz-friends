@@ -108,7 +108,7 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
     
     @IBAction func playButtonPressed(_ sender: Any) {
         if hapticSetting {
-            AudioServicesPlaySystemSound(1521)
+            AudioServicesPlaySystemSound(1520)
         }
     }
     
@@ -205,6 +205,11 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
     }
     
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
+        if hapticSetting {
+            AudioServicesPlaySystemSound(4095)
+            print("vibrate")
+        }
+        
         let acceptAction = UIAlertAction(title: "Accept",
                                          style: .default) { [self] action in
             invitationHandler(true, session)
@@ -243,6 +248,10 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
         } else {
             clientList.text = ""
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        stopClient()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -46,13 +46,11 @@ class QuizViewController: UIViewController, MCSessionDelegate {
         var num: Int?
         var questionS: String?
         var correctAns: String?
-        
     }
     
     struct optionStruct {
         var letter: String?
         var choice: String?
-        
     }
     
     var question = [questionStruct]()
@@ -105,6 +103,22 @@ class QuizViewController: UIViewController, MCSessionDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         tiltTimer.invalidate()
+    }
+    
+    override func becomeFirstResponder() -> Bool {
+        return true
+    }
+
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?){
+        if motion == .motionShake && shakeSetting {
+            if hapticSetting {
+                AudioServicesPlaySystemSound(1521)
+            }
+            
+            let randomAnswer = Int.random(in: 1...4)
+            
+            tiltButton(answerChoice: randomAnswer)
+        }
     }
     
     func setupUI(gameMode: Int) {
@@ -178,7 +192,7 @@ class QuizViewController: UIViewController, MCSessionDelegate {
     }
     
     func tiltButton(answerChoice: Int) {
-        if hapticSetting && answerChoice != answerSelected{
+        if hapticSetting && answerChoice != answerSelected {
             AudioServicesPlaySystemSound(1519)
         }
         
