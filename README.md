@@ -17,7 +17,7 @@
 Quiz Friends, written in Swift for iOS, utilizes Multipeer Framework to allow for local multiplayer games. The quiz data is fetched through remote JSON libraries.
 
 ## 2 | Code Configuration
-Within first few lines of `QuizViewController.swift`, one can easily identify and configure the back-facing constants to their liking.
+Within first few lines of [`QuizViewController.swift`](quiz-friends/QuizViewController.swift), one can easily identify and configure the back-facing constants to their liking.
 
 ### 2.1 | Color Constants (UIColor)
 | Constant | Description | Default Value |
