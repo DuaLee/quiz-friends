@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		420B765C2821CEC7001233D2 /* PlayerScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420B765B2821CEC7001233D2 /* PlayerScore.swift */; };
 		424A9A9A28159F210063EC2F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A9A9928159F210063EC2F /* AppDelegate.swift */; };
 		424A9A9E28159F210063EC2F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A9A9D28159F210063EC2F /* ViewController.swift */; };
 		424A9AA128159F210063EC2F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 424A9A9F28159F210063EC2F /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		420B765B2821CEC7001233D2 /* PlayerScore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerScore.swift; sourceTree = "<group>"; };
 		424A9A9628159F210063EC2F /* quiz-friends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "quiz-friends.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		424A9A9928159F210063EC2F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		424A9A9D28159F210063EC2F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 				424A9A9D28159F210063EC2F /* ViewController.swift */,
 				424A9AAD2815ACD80063EC2F /* QuizViewController.swift */,
 				427EF8F2281861E0007E05A1 /* SettingsViewController.swift */,
+				420B765B2821CEC7001233D2 /* PlayerScore.swift */,
 				424A9A9F28159F210063EC2F /* Main.storyboard */,
 				424A9AA228159F220063EC2F /* Assets.xcassets */,
 				424A9AA428159F220063EC2F /* LaunchScreen.storyboard */,
@@ -144,6 +147,7 @@
 				424A9A9E28159F210063EC2F /* ViewController.swift in Sources */,
 				424A9A9A28159F210063EC2F /* AppDelegate.swift in Sources */,
 				424A9AAE2815ACD80063EC2F /* QuizViewController.swift in Sources */,
+				420B765C2821CEC7001233D2 /* PlayerScore.swift in Sources */,
 				427EF8F3281861E0007E05A1 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

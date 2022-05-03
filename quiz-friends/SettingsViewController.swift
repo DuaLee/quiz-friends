@@ -11,12 +11,14 @@ import AudioToolbox
 var tiltSetting = false
 var hapticSetting = false
 var shakeSetting = false
+var retainSetting = false
 
 class SettingsViewController: UIViewController {
 
     @IBOutlet weak var tiltButton: UIButton!
     @IBOutlet weak var hapticButton: UIButton!
     @IBOutlet weak var shakeButton: UIButton!
+    @IBOutlet weak var retainButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +32,9 @@ class SettingsViewController: UIViewController {
         shakeButton.setTitle(" Enable Shake to Roulette", for: .normal)
         shakeButton.setTitle(" Disable Shake to Roulette", for: .selected)
 
+        retainButton.setTitle(" Enable Retain Score Each Round", for: .normal)
+        retainButton.setTitle(" Disable Retain Score Each Round", for: .selected)
+        
         if tiltSetting {
             tiltButton.isSelected = true
         }
@@ -40,6 +45,10 @@ class SettingsViewController: UIViewController {
         
         if shakeSetting {
             shakeButton.isSelected = true
+        }
+        
+        if retainSetting {
+            retainButton.isSelected = true
         }
     }
 
@@ -57,6 +66,9 @@ class SettingsViewController: UIViewController {
             case 3:
                 shakeSetting = false
                 
+            case 4:
+                retainSetting = false
+                
             default:
                 break
             }
@@ -73,6 +85,9 @@ class SettingsViewController: UIViewController {
                 
             case 3:
                 shakeSetting = true
+                
+            case 4:
+                retainSetting = true
                 
             default:
                 break

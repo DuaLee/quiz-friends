@@ -17,13 +17,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fmd-Ml-FjY">
-                                <rect key="frame" x="20" y="108" width="374" height="774"/>
+                                <rect key="frame" x="20" y="108" width="374" height="734"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="GCb-pY-9dV">
-                                        <rect key="frame" x="0.0" y="20" width="374" height="367"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="734"/>
                                         <subviews>
                                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z9i-lU-UcG">
-                                                <rect key="frame" x="0.0" y="0.0" width="374" height="109"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="168.5"/>
                                                 <color key="tintColor" systemColor="systemOrangeColor"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="tinted" image="arrow.up.and.down.and.arrow.left.and.right" catalog="system" title=" Enable Tilt to Answer" cornerStyle="small">
@@ -35,7 +35,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k6l-GA-hMx">
-                                                <rect key="frame" x="0.0" y="129" width="374" height="109"/>
+                                                <rect key="frame" x="0.0" y="188.5" width="374" height="168.5"/>
                                                 <color key="tintColor" systemColor="systemOrangeColor"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="tinted" image="waveform.path" catalog="system" title=" Enable Haptic Feedback" cornerStyle="small">
@@ -47,7 +47,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Zt-iY-BHk">
-                                                <rect key="frame" x="0.0" y="258" width="374" height="109"/>
+                                                <rect key="frame" x="0.0" y="377" width="374" height="168.5"/>
                                                 <color key="tintColor" systemColor="systemOrangeColor"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="tinted" image="iphone.radiowaves.left.and.right" catalog="system" title=" Enable Shake to Roulette" cornerStyle="small">
@@ -58,15 +58,27 @@
                                                     <action selector="buttonPressed:" destination="jw1-pX-oa5" eventType="touchUpInside" id="OLJ-jL-LXz"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Wz-md-ilX">
+                                                <rect key="frame" x="0.0" y="565.5" width="374" height="168.5"/>
+                                                <color key="tintColor" systemColor="systemOrangeColor"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="tinted" image="highlighter" catalog="system" title=" Enable Retain Score Each Round" cornerStyle="small">
+                                                    <fontDescription key="titleFontDescription" type="system" pointSize="17"/>
+                                                    <color key="baseBackgroundColor" systemColor="systemOrangeColor"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="buttonPressed:" destination="jw1-pX-oa5" eventType="touchUpInside" id="9Ik-y7-8zR"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                     </stackView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="GCb-pY-9dV" firstAttribute="top" secondItem="Fmd-Ml-FjY" secondAttribute="top" constant="20" id="3OT-KU-z1N"/>
+                                    <constraint firstItem="GCb-pY-9dV" firstAttribute="top" secondItem="Fmd-Ml-FjY" secondAttribute="top" id="3OT-KU-z1N"/>
                                     <constraint firstAttribute="trailing" secondItem="GCb-pY-9dV" secondAttribute="trailing" id="3sO-Rq-66X"/>
                                     <constraint firstAttribute="trailing" secondItem="GCb-pY-9dV" secondAttribute="trailing" id="5BF-fr-epx"/>
-                                    <constraint firstAttribute="centerY" secondItem="GCb-pY-9dV" secondAttribute="bottom" id="75G-NJ-GfE"/>
+                                    <constraint firstAttribute="bottom" secondItem="GCb-pY-9dV" secondAttribute="bottom" id="75G-NJ-GfE"/>
                                     <constraint firstItem="GCb-pY-9dV" firstAttribute="leading" secondItem="Fmd-Ml-FjY" secondAttribute="leading" id="8E8-DX-C4T"/>
                                     <constraint firstItem="GCb-pY-9dV" firstAttribute="leading" secondItem="Fmd-Ml-FjY" secondAttribute="leading" id="gGl-cR-yW4"/>
                                 </constraints>
@@ -75,7 +87,7 @@
                         <viewLayoutGuide key="safeArea" id="BcJ-nT-SlO"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Fmd-Ml-FjY" firstAttribute="bottom" secondItem="BcJ-nT-SlO" secondAttribute="bottom" constant="20" id="Iv5-80-kOc"/>
+                            <constraint firstItem="Fmd-Ml-FjY" firstAttribute="bottom" secondItem="BcJ-nT-SlO" secondAttribute="bottom" constant="-20" id="Iv5-80-kOc"/>
                             <constraint firstItem="Fmd-Ml-FjY" firstAttribute="leading" secondItem="BcJ-nT-SlO" secondAttribute="leading" constant="20" id="PuL-Os-kD7"/>
                             <constraint firstItem="BcJ-nT-SlO" firstAttribute="trailing" secondItem="Fmd-Ml-FjY" secondAttribute="trailing" constant="20" id="bBU-gi-zZL"/>
                             <constraint firstItem="Fmd-Ml-FjY" firstAttribute="top" secondItem="BcJ-nT-SlO" secondAttribute="top" constant="20" id="gd6-9j-IKW"/>
@@ -84,6 +96,7 @@
                     <navigationItem key="navigationItem" title="Settings" id="s4E-0V-tyE"/>
                     <connections>
                         <outlet property="hapticButton" destination="k6l-GA-hMx" id="ehO-xC-3MZ"/>
+                        <outlet property="retainButton" destination="7Wz-md-ilX" id="WlA-1G-UyJ"/>
                         <outlet property="shakeButton" destination="4Zt-iY-BHk" id="3L8-9h-sIw"/>
                         <outlet property="tiltButton" destination="z9i-lU-UcG" id="60h-Yi-gEf"/>
                     </connections>
@@ -167,7 +180,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4rc-tf-MUD">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4rc-tf-MUD">
                                         <rect key="frame" x="0.0" y="558.5" width="374" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="V8L-yd-0MQ"/>
@@ -357,26 +370,35 @@
                                         </constraints>
                                         <color key="tintColor" systemColor="systemRedColor"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="tinted" title="Restart" cornerStyle="large">
+                                        <buttonConfiguration key="configuration" style="tinted" title="Play Again" cornerStyle="large">
                                             <color key="baseBackgroundColor" systemColor="systemRedColor"/>
                                         </buttonConfiguration>
                                         <connections>
                                             <action selector="restart:" destination="Gba-el-IDC" eventType="touchUpInside" id="Ghz-p7-8uB"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Winner/Loser" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VAR-J1-TvP">
-                                        <rect key="frame" x="137" y="146" width="100.5" height="20.5"/>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your friends scored:" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VAR-J1-TvP">
+                                        <rect key="frame" x="110.5" y="69" width="153" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You scored: " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c17-ch-VDW">
+                                        <rect key="frame" x="121" y="20" width="132" height="29"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
+                                    <constraint firstItem="c17-ch-VDW" firstAttribute="centerX" secondItem="RVw-t6-POZ" secondAttribute="centerX" id="2SF-Te-KDf"/>
                                     <constraint firstItem="0yj-SR-6J4" firstAttribute="leading" secondItem="RVw-t6-POZ" secondAttribute="leading" id="Fn7-C8-GDJ"/>
+                                    <constraint firstItem="VAR-J1-TvP" firstAttribute="top" secondItem="c17-ch-VDW" secondAttribute="bottom" constant="20" id="L8F-5K-MDa"/>
+                                    <constraint firstItem="c17-ch-VDW" firstAttribute="top" secondItem="RVw-t6-POZ" secondAttribute="top" constant="20" id="LJG-St-nyy"/>
                                     <constraint firstAttribute="trailing" secondItem="0yj-SR-6J4" secondAttribute="trailing" id="XWE-Nv-t0v"/>
+                                    <constraint firstItem="0yj-SR-6J4" firstAttribute="top" relation="greaterThanOrEqual" secondItem="VAR-J1-TvP" secondAttribute="bottom" constant="20" id="gwF-tl-x7U"/>
                                     <constraint firstAttribute="centerX" secondItem="VAR-J1-TvP" secondAttribute="centerX" id="mNI-LH-d20"/>
-                                    <constraint firstItem="VAR-J1-TvP" firstAttribute="centerY" secondItem="RVw-t6-POZ" secondAttribute="centerY" id="nY2-R5-iXq"/>
                                     <constraint firstAttribute="bottom" secondItem="0yj-SR-6J4" secondAttribute="bottom" id="wZM-PL-7sh"/>
                                 </constraints>
                             </view>
@@ -454,8 +476,9 @@
                         <outlet property="buttonB" destination="CHc-TZ-a7K" id="5kN-Df-0yx"/>
                         <outlet property="buttonC" destination="7I1-Uj-CED" id="5Qk-R4-RgK"/>
                         <outlet property="buttonD" destination="J0W-jx-IVc" id="MED-GJ-LhO"/>
-                        <outlet property="endScreenLabel" destination="VAR-J1-TvP" id="Q2Y-TT-f1X"/>
                         <outlet property="endingView" destination="RVw-t6-POZ" id="zRq-wD-UWO"/>
+                        <outlet property="myScoreLabel" destination="c17-ch-VDW" id="dQE-X1-bZb"/>
+                        <outlet property="otherScoreLabel" destination="VAR-J1-TvP" id="Q2Y-TT-f1X"/>
                         <outlet property="player1" destination="jpj-e6-87x" id="LeD-cn-0tu"/>
                         <outlet property="player2" destination="vQw-QD-gua" id="GaH-W0-ccF"/>
                         <outlet property="player3" destination="uvb-8F-bCG" id="OlT-PI-ht5"/>
@@ -494,6 +517,7 @@
     <resources>
         <image name="arrow.up.and.down.and.arrow.left.and.right" catalog="system" width="128" height="122"/>
         <image name="gearshape" catalog="system" width="128" height="121"/>
+        <image name="highlighter" catalog="system" width="128" height="119"/>
         <image name="iphone.radiowaves.left.and.right" catalog="system" width="128" height="85"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>

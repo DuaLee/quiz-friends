@@ -19,8 +19,13 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
     let defaultColor = UIColor.systemGray
     //
     
+    // MARK: Score Constants (Default: Jeopardy Style)
+    let correctAward = 1.0 // default: 1.0
+    let incorrectAward = -1.0 // default: -1.0
+    let noAnswerAward = 0.0 // default: 0.0
+    
     // MARK: Timer Constants (seconds)
-    let questionTime: TimeInterval = 5 // default: 20
+    let questionTime: TimeInterval = 5 // default: 10
     let reviewTime: TimeInterval = 3 // default: 3
     //
     
@@ -53,10 +58,13 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
     
     var answerSelected = 0
     var quizID = 1
+    var playerScore = PlayerScore()
     
     @IBOutlet weak var questionNumLabel: UILabel!
     @IBOutlet weak var questionLabel: UILabel!
-    @IBOutlet weak var endScreenLabel: UILabel!
+    
+    @IBOutlet weak var myScoreLabel: UILabel!
+    @IBOutlet weak var otherScoreLabel: UILabel!
     
     var gameMode: Int = 0
     var isHost: Bool = false
@@ -74,24 +82,26 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
     var numQuestions = 0
     var qTitle = ""
 
-    struct questionStruct {
+    struct Question {
         var num: Int?
         var questionS: String?
         var correctAns: String?
     }
     
-    struct optionStruct {
+    struct QuestionOption {
         var letter: String?
         var choice: String?
     }
     
-    var question = [questionStruct]()
-    var option = [optionStruct]()
+    var question = [Question]()
+    var option = [QuestionOption]()
     
     @IBOutlet weak var endingView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        getJSONData()
         
         startingPeers = session.connectedPeers
         
@@ -101,54 +111,19 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
         playerIcons = [player1, player2, player3, player4]
         statusLabels = [status1, status2, status3, status4]
         answerButtons = [buttonA, buttonB, buttonC, buttonD]
-        restartButton.isSelected = false
         
-        endingView.isHidden = true
-        questionNumLabel.isHidden = false
+        playerScore.displayName = myPeerID.displayName
         
-        for playerIcon in playerIcons {
-            playerIcon.isSelected = false
-        }
-        for statusLabel in statusLabels {
-            statusLabel.textColor = defaultColor
-            statusLabel.text = ""
+        if !retainSetting {
+            playerScore.score = 0
         }
         
         setupUI(gameMode: gameMode)
+        drawTimer()
         
         if tiltSetting {
-            coreMotionManager.startAccelerometerUpdates()
-            
-            tiltTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [self] _ in
-                if let data = self.coreMotionManager.accelerometerData {
-                    if !startingSet {
-                        startingX = data.acceleration.x
-                        startingY = data.acceleration.y
-                        
-                        startingSet = true
-                    } else {
-                        let x = data.acceleration.x - startingX
-                        let y = data.acceleration.y - startingY
-
-                        //print(x, y)
-
-                        if x > 0.2 {
-                            tiltButton(answerChoice: 4)
-                        } else if x < -0.2 {
-                            tiltButton(answerChoice: 3)
-                        } else if y > 0.2 {
-                            tiltButton(answerChoice: 1)
-                        } else if y < -0.2 {
-                            tiltButton(answerChoice: 2)
-                        }
-                    }
-                }
-            }
+            setupTilt()
         }
-        
-        getJSONData()
-        
-        drawTimer()
     }
     
     let shapeLayer = CAShapeLayer()
@@ -204,13 +179,16 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
             
             if option[answerSelected - 1].letter! == question[0].correctAns! {
                 statusLabels[0].textColor = correctColor
+                playerScore.score += correctAward
             } else {
                 statusLabels[0].textColor = incorrectColor
+                playerScore.score += incorrectAward
             }
         } else {
             trigger = "0".data(using: .utf8, allowLossyConversion: false)!
         
             statusLabels[0].textColor = noAnswerColor
+            playerScore.score += noAnswerAward
         }
         
         do {
@@ -242,6 +220,20 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
             } else {
                 endingView.isHidden = false
                 questionNumLabel.isHidden = true
+                
+                myScoreLabel.text = "You scored: \(playerScore.score)"
+                
+                if gameMode == 2 {
+                    otherScoreLabel.isHidden = false
+                    
+                    let trigger = "- \(playerScore.description)".data(using: .utf8, allowLossyConversion: false)
+                    
+                    do {
+                        try session.send(trigger!, toPeers: session.connectedPeers, with: .reliable)
+                    } catch {
+                        //print(error)
+                    }
+                }
                 
                 if isHost || gameMode == 1 {
                     restartButton.isEnabled = true
@@ -301,11 +293,25 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
     }
     
     func setupUI(gameMode: Int) {
+        restartButton.isSelected = false
+        
+        endingView.isHidden = true
+        questionNumLabel.isHidden = false
+        
+        myScoreLabel.text = ""
+        otherScoreLabel.text = ""
+        
         for playerIcon in playerIcons {
             playerIcon.isUserInteractionEnabled = false
             playerIcon.isEnabled = false
             playerIcon.isSelected = false
             playerIcon.setTitle("", for: .normal)
+            playerIcon.setImage(nil, for: .normal)
+        }
+        
+        for statusLabel in statusLabels {
+            statusLabel.textColor = defaultColor
+            statusLabel.text = ""
         }
         
         playerIcons[0].setTitle(myPeerID.displayName, for: .normal)
@@ -336,6 +342,11 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
         if dataString == "restart" {
             DispatchQueue.main.async { [self] in
                 restart(restartButton)
+            }
+        } else if dataString.starts(with: "-") {
+            //print(dataString)
+            DispatchQueue.main.async { [self] in
+                otherScoreLabel.text?.append("\n\(dataString)")
             }
         } else if let playerIndex = startingPeers.firstIndex(of: peerID) {
             if dataString == "disconnect" {
@@ -385,6 +396,36 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
                 try session.send(trigger!, toPeers: session.connectedPeers, with: .reliable)
             } catch {
                 //print(error)
+            }
+        }
+    }
+    
+    func setupTilt() {
+        coreMotionManager.startAccelerometerUpdates()
+        
+        tiltTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [self] _ in
+            if let data = self.coreMotionManager.accelerometerData {
+                if !startingSet {
+                    startingX = data.acceleration.x
+                    startingY = data.acceleration.y
+                    
+                    startingSet = true
+                } else {
+                    let x = data.acceleration.x - startingX
+                    let y = data.acceleration.y - startingY
+
+                    //print(x, y)
+
+                    if x > 0.2 {
+                        tiltButton(answerChoice: 4)
+                    } else if x < -0.2 {
+                        tiltButton(answerChoice: 3)
+                    } else if y > 0.2 {
+                        tiltButton(answerChoice: 1)
+                    } else if y < -0.2 {
+                        tiltButton(answerChoice: 2)
+                    }
+                }
             }
         }
     }
@@ -453,10 +494,10 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
     func readJSONData(_ json: [String: AnyObject]) {
         if let questions = json["questions"] as? [[String: AnyObject]] {
             for q in questions {
-                question.append(questionStruct(num: q["number"]! as? Int, questionS: q["questionSentence"]! as? String, correctAns:q["correctOption"]! as? String))
+                question.append(Question(num: q["number"]! as? Int, questionS: q["questionSentence"]! as? String, correctAns:q["correctOption"]! as? String))
                 if let ops = q["options"] as? [String: AnyObject] {
                     for options in ops {
-                        option.append(optionStruct(letter: options.key, choice: options.value as? String))
+                        option.append(QuestionOption(letter: options.key, choice: options.value as? String))
                     }
                 }
                 
