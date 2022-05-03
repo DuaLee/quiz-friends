@@ -334,7 +334,6 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
         //print("dataString \(dataString)")
         
         if dataString == "restart" {
-//            restartFunction()
             DispatchQueue.main.async { [self] in
                 restart(restartButton)
             }
@@ -482,9 +481,6 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
             
             self.buttonD.setTitle("\(self.option[3].choice!)", for: .normal)
         }
-    }
-    
-    func restartFunction() {
     }
     
     @IBAction func restart(_ sender: UIButton) {
