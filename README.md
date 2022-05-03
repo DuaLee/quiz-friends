@@ -1,5 +1,18 @@
 # Quiz Friends
 
+## Contents
+- [Overview](#1--overview)
+- [Code Configuration](#2--code-configuration)
+  - [Color Constants](#21--color-constants-uicolor)
+  - [Score Constants](#22--score-constants-double)
+  - [Timer Constants](#23--timer-constants-timeinterval-seconds)
+- [In-App Configuration](#3--in-app-configuration)
+  - [Tilt to Answer](#31--tilt-to-answer-client-setting)
+  - [Haptic Feedback](#32--haptic-feedback-client-setting)
+  - [Shake to Roulette](#33--shake-to-roulette-client-setting)
+  - [Retain Score](#34--retain-score-each-round-host-setting)
+- [Major Contributors](#4--major-contributors)
+
 ## 1 | Overview
 Quiz Friends, written in Swift for iOS, utilizes Multipeer Framework to allow for local multiplayer games. The quiz data is fetched through remote JSON libraries.
 
@@ -48,5 +61,10 @@ Enable/disable random selection of answer choice by shaking device. Can be done 
 
 ### 3.4 | Retain Score Each Round (Host Setting)
 When the host clicks play again at the round review screen, the current score is transfered to the next round, infinitely. The score, however, is only retained for a particular session.
+
+## 4 | Major Contributors
+- DuaLee
+- lannahdavis
+- lannahd
 
 ![image](https://user-images.githubusercontent.com/23531530/166174735-72599481-5d5e-467d-9a6d-47a4f0f79532.png)
