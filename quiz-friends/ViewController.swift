@@ -276,11 +276,12 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
                     do {
                         try session.send(trigger!, toPeers: session.connectedPeers, with: .reliable)
                     } catch {
-                        print(error)
+                        //print(error)
                     }
                 }
                 
                 controller.gameMode = self.gameMode
+                controller.isHost = self.isHost
                 controller.session = self.session
                 controller.parentVC = self
             default:

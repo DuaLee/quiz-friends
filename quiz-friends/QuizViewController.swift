@@ -15,13 +15,13 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
     // MARK: Color Constants
     let correctColor = UIColor.systemCyan
     let incorrectColor = UIColor.systemPink
-    let noAnswerColor = UIColor.systemPink
+    let noAnswerColor = UIColor.systemYellow
     let defaultColor = UIColor.systemGray
     //
     
     // MARK: Timer Constants (seconds)
-    let questionTime: TimeInterval = 20
-    let reviewTime: TimeInterval = 3
+    let questionTime: TimeInterval = 5 // default: 20
+    let reviewTime: TimeInterval = 3 // default: 3
     //
     
     // MARK: JSON Source Constants
@@ -59,6 +59,7 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
     @IBOutlet weak var endScreenLabel: UILabel!
     
     var gameMode: Int = 0
+    var isHost: Bool = false
     
     var myPeerID: MCPeerID!
     var session: MCSession!
@@ -87,7 +88,7 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
     var question = [questionStruct]()
     var option = [optionStruct]()
     
-    @IBOutlet weak var EndingView: UIView!
+    @IBOutlet weak var endingView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,6 +102,9 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
         statusLabels = [status1, status2, status3, status4]
         answerButtons = [buttonA, buttonB, buttonC, buttonD]
         restartButton.isSelected = false
+        
+        endingView.isHidden = true
+        questionNumLabel.isHidden = false
         
         for playerIcon in playerIcons {
             playerIcon.isSelected = false
@@ -192,9 +196,10 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
         
         var trigger = Data()
         
-        print(answerSelected)
+        //print("answerSelected \(answerSelected)")
         
         if answerSelected > 0 {
+            //print("something selected")
             trigger = option[answerSelected - 1].letter!.data(using: .utf8, allowLossyConversion: false)!
             
             if option[answerSelected - 1].letter! == question[0].correctAns! {
@@ -235,8 +240,12 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
                 
                 loadQuizData()
             } else {
-                EndingView.isHidden = false
+                endingView.isHidden = false
                 questionNumLabel.isHidden = true
+                
+                if isHost || gameMode == 1 {
+                    restartButton.isEnabled = true
+                }
                 
                 for answerButton in answerButtons {
                     answerButton.isEnabled = false
@@ -322,9 +331,14 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         let dataString = String(decoding: data, as: UTF8.self)
-        print(dataString)
+        //print("dataString \(dataString)")
         
-        if let playerIndex = startingPeers.firstIndex(of: peerID) {
+        if dataString == "restart" {
+//            restartFunction()
+            DispatchQueue.main.async { [self] in
+                restart(restartButton)
+            }
+        } else if let playerIndex = startingPeers.firstIndex(of: peerID) {
             if dataString == "disconnect" {
                 DispatchQueue.main.async { [self] in
                     playerIcons[playerIndex + 1].isEnabled = false
@@ -335,15 +349,20 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
                 DispatchQueue.main.async { [self] in
                     playerIcons[playerIndex + 1].isSelected = true
                 }
-            } else {
+            } else if ["A", "B", "C", "D"].contains(dataString) {
                 DispatchQueue.main.async { [self] in
                     if dataString == question[0].correctAns! {
                         statusLabels[playerIndex + 1].textColor = correctColor
-                    } else if dataString == "0" {
-                        statusLabels[playerIndex + 1].textColor = noAnswerColor
+                        //print("correct")
                     } else {
                         statusLabels[playerIndex + 1].textColor = incorrectColor
+                        //print("incorrect")
                     }
+                }
+            } else if dataString == "0" {
+                DispatchQueue.main.async { [self] in
+                    statusLabels[playerIndex + 1].textColor = noAnswerColor
+                    //print("empty")
                 }
             }
         }
@@ -465,6 +484,9 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
         }
     }
     
+    func restartFunction() {
+    }
+    
     @IBAction func restart(_ sender: UIButton) {
         if quizID < endIndex {
             quizID += 1
@@ -472,13 +494,23 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
             quizID = 1
         }
         
-        EndingView.isHidden = true
-        questionNumLabel.isHidden = false
-        
         for answerButton in answerButtons {
             answerButton.isEnabled = true
         }
-       
+        
+        endingView.isHidden = true
+        
+        // MARK: if is host session send restart command to other clients. only show restart button to host. grab isHost from viewcontroller segue //
+        if isHost {
+            let trigger = "restart".data(using: .utf8, allowLossyConversion: false)
+            
+            do {
+                try session.send(trigger!, toPeers: session.connectedPeers, with: .reliable)
+            } catch {
+                //print(error)
+            }
+        }
+        
         viewDidLoad()
     }
 }

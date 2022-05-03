@@ -350,7 +350,7 @@
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RVw-t6-POZ">
                                 <rect key="frame" x="20" y="280" width="374" height="312"/>
                                 <subviews>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0yj-SR-6J4">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0yj-SR-6J4">
                                         <rect key="frame" x="0.0" y="262" width="374" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="ZvR-Fg-5HH"/>
@@ -450,12 +450,12 @@
                     </view>
                     <navigationItem key="navigationItem" title="Quiz" id="5kc-in-yE3"/>
                     <connections>
-                        <outlet property="EndingView" destination="RVw-t6-POZ" id="zRq-wD-UWO"/>
                         <outlet property="buttonA" destination="HKa-16-oc0" id="JLY-eq-mGx"/>
                         <outlet property="buttonB" destination="CHc-TZ-a7K" id="5kN-Df-0yx"/>
                         <outlet property="buttonC" destination="7I1-Uj-CED" id="5Qk-R4-RgK"/>
                         <outlet property="buttonD" destination="J0W-jx-IVc" id="MED-GJ-LhO"/>
                         <outlet property="endScreenLabel" destination="VAR-J1-TvP" id="Q2Y-TT-f1X"/>
+                        <outlet property="endingView" destination="RVw-t6-POZ" id="zRq-wD-UWO"/>
                         <outlet property="player1" destination="jpj-e6-87x" id="LeD-cn-0tu"/>
                         <outlet property="player2" destination="vQw-QD-gua" id="GaH-W0-ccF"/>
                         <outlet property="player3" destination="uvb-8F-bCG" id="OlT-PI-ht5"/>
