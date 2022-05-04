@@ -291,7 +291,7 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
     
     override func viewDidDisappear(_ animated: Bool) {
         session.disconnect()
-        //self.removeFromParent()
+        self.removeFromParent()
     }
     
     override func becomeFirstResponder() -> Bool {
