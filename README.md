@@ -1,20 +1,21 @@
 # Quiz Friends
 
 ## Contents
-- [Overview](#1--overview)
-- [Code Configuration](#2--code-configuration)
+- **[Overview](#1--overview)**
+- **[Code Configuration](#2--code-configuration)**
   - [Color Constants](#21--color-constants-uicolor)
   - [Score Constants](#22--score-constants-double)
   - [Timer Constants](#23--timer-constants-timeinterval-seconds)
-- [In-App Configuration](#3--in-app-configuration)
+- **[In-App Configuration](#3--in-app-configuration)**
   - [Tilt to Answer](#31--tilt-to-answer-client-setting)
   - [Haptic Feedback](#32--haptic-feedback-client-setting)
   - [Shake to Roulette](#33--shake-to-roulette-client-setting)
   - [Retain Score](#34--retain-score-each-round-host-setting)
-- [Major Contributors](#4--major-contributors)
+- **[Major Contributors](#4--major-contributors)**
 
 ## 1 | Overview
 Quiz Friends, written in Swift for iOS, utilizes Multipeer Framework to allow for local multiplayer games. The quiz data is fetched through remote JSON libraries.
+To download the source code, head over to [releases](https://github.com/DuaLee/quiz-friends/releases/latest) for the last stable release or clone the repository for the most recent unstable build.
 
 ## 2 | Code Configuration
 Within first few lines of [`QuizViewController.swift`](quiz-friends/QuizViewController.swift), one can easily identify and configure the back-facing constants to their liking.
