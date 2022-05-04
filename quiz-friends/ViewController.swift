@@ -172,8 +172,12 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
     }
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
-        DispatchQueue.main.async {
-            self.performSegue(withIdentifier: "quizSegue", sender: self)
+        let dataString = String(decoding: data, as: UTF8.self)
+        
+        if dataString == "segue" {
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "quizSegue", sender: self)
+            }
         }
     }
     
@@ -271,7 +275,7 @@ class ViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessi
                 let controller = segue.destination as! QuizViewController
                 
                 if isHost {
-                    let trigger: Data? = "segue".data(using: .utf8)
+                    let trigger = "segue".data(using: .utf8, allowLossyConversion: false)
                     
                     do {
                         try session.send(trigger!, toPeers: session.connectedPeers, with: .reliable)

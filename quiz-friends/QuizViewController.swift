@@ -68,6 +68,7 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
     
     var gameMode: Int = 0
     var isHost: Bool = false
+    var isRetainingScore = false
     
     var myPeerID: MCPeerID!
     var session: MCSession!
@@ -101,6 +102,8 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false // prevent back button action using swipe
+        
         getJSONData()
         
         startingPeers = session.connectedPeers
@@ -114,7 +117,18 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
         
         playerScore.displayName = myPeerID.displayName
         
-        if !retainSetting {
+        if isHost && retainSetting {
+            isRetainingScore = true
+            
+            let trigger = "retainScore".data(using: .utf8, allowLossyConversion: false)!
+            
+            do {
+                try session.send(trigger, toPeers: session.connectedPeers, with: .reliable)
+            } catch {
+                //print(error)
+            }
+        }
+        if !isRetainingScore {
             playerScore.score = 0
         }
         
@@ -129,6 +143,8 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
     let shapeLayer = CAShapeLayer()
     let trackLayer = CAShapeLayer()
     let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
+    
+    var reviewTimer = Timer()
     
     func drawTimer() {
         var center = view.center
@@ -197,7 +213,7 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
             //print(error)
         }
         
-        Timer.scheduledTimer(withTimeInterval: reviewTime, repeats: false) { [self] _ in
+        reviewTimer = Timer.scheduledTimer(withTimeInterval: reviewTime, repeats: false) { [self] _ in
             question.remove(at: 0)
             option.removeSubrange(0...3)
             
@@ -262,6 +278,7 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
         parentVC!.viewDidLoad()
         
         tiltTimer.invalidate()
+        reviewTimer.invalidate()
         
         let trigger = "disconnect".data(using: .utf8, allowLossyConversion: false)
         
@@ -274,6 +291,7 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
     
     override func viewDidDisappear(_ animated: Bool) {
         session.disconnect()
+        //self.removeFromParent()
     }
     
     override func becomeFirstResponder() -> Bool {
@@ -338,6 +356,10 @@ class QuizViewController: UIViewController, MCSessionDelegate, CAAnimationDelega
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         let dataString = String(decoding: data, as: UTF8.self)
         //print("dataString \(dataString)")
+        
+        if dataString == "retainScore" {
+            self.isRetainingScore = true
+        }
         
         if dataString == "restart" {
             DispatchQueue.main.async { [self] in
