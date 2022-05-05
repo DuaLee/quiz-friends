@@ -28,7 +28,7 @@ Within first few lines of [`QuizViewController.swift`](quiz-friends/QuizViewCont
 | `noAnswerColor` | Status color for no answer selected | ![](https://via.placeholder.com/15/ffcc00/000000?text=+) `systemYellow` |
 | `defaultColor` | Status color for neutral state | ![](https://via.placeholder.com/15/8e8e93/000000?text=+) `systemGray` |
 
-> \*Default colors based on Apple's [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/color/)
+> \*Default colors shown are for light mode only and are based on Apple's [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/color/)
 
 ### 2.2 | Score Constants (Double)
 | Constant | Description | Default Value |
