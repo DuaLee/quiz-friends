@@ -21,12 +21,14 @@ To download the source code, head over to [releases](https://github.com/DuaLee/q
 Within first few lines of [`QuizViewController.swift`](quiz-friends/QuizViewController.swift), one can easily identify and configure the back-facing constants to their liking.
 
 ### 2.1 | Color Constants (UIColor)
-| Constant | Description | Default Value |
+| Constant | Description | Default Value\* |
 | --- | --- | --- |
-| `correctColor` | Status color for correct answer | `systemCyan` |
-| `incorrectColor` | Status color for incorrect answer | `systemPink` |
-| `noAnswerColor` | Status color for no answer selected | `systemYellow` |
-| `defaultColor` | Status color for neutral state | `systemGray` |
+| `correctColor` | Status color for correct answer | ![](https://via.placeholder.com/15/32ade6/000000?text=+) `systemCyan` |
+| `incorrectColor` | Status color for incorrect answer | ![](https://via.placeholder.com/15/ff2d54/000000?text=+) `systemPink` |
+| `noAnswerColor` | Status color for no answer selected | ![](https://via.placeholder.com/15/ffcc00/000000?text=+) `systemYellow` |
+| `defaultColor` | Status color for neutral state | ![](https://via.placeholder.com/15/8e8e93/000000?text=+) `systemGray` |
+
+> \*Default colors based on Apple's [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/color/)
 
 ### 2.2 | Score Constants (Double)
 | Constant | Description | Default Value |
